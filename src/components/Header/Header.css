@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #FD2;
+}
+
+.totalPrice {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+}
+
+.cart {
+    position: relative;
+    height: 45px;
+    width: 45px;
+    background-image: url('../../assets/img/cart.svg');
+    cursor: pointer;
+    transition: .3s;
+}
+
+.cartCounter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(73, 73, 180);
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: aliceblue;
+    text-align: center;
+}
+
+.cart:hover {
+    transform: scale(1.1);
+}
