@@ -1,14 +1,11 @@
-import React, {useState} from "react";
-import { Logo } from "../../shared/Logo";
 import './Header.css';
+import LogoImg from '../../assets/img/orliner-logo.png';
+import { totalAmount, totalPrice } from '../../stubs/stubs';
 
 export function Header() {
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalAmount, setTotalAmount] = useState(0);
-    
     return (
         <div className="container">
-            <Logo />
+            <img src = {LogoImg} alt='orliner' className="logoImg" />
             <div>
                 <span className="totalPrice">
                     Total: {totalPrice}
