@@ -2,6 +2,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  --main-border-color: gainsboro;
+  --main-button-color: #e70;
+  --stars-color: gold;
 }
 
 .product-container {
@@ -9,10 +12,10 @@
   max-width: 1140px;
   width: 100%;
   margin: 0 auto;
-  padding: 10px 10px;
+  padding: 10px;
   flex-wrap: wrap;
   min-width: 340px;
-  border: 1px solid gainsboro;
+  border: 1px solid var(--main-border-color);
   justify-content: space-between;
 }
 
@@ -40,15 +43,22 @@
   height: 70px;
 }
 
-.product__img {
+.product__img-container {
   max-width: 200px;
   width: 100%;
   height: 200px;
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid gainsboro;
+  border: 1px solid var(--main-border-color);
   border-radius: 10px;
+  overflow: hidden;
+}
+
+.product__img {
+  height: 100%;
+  position: relative;
+  right: 50%;
 }
 
 .product__raiting {
@@ -56,7 +66,7 @@
   flex-direction: row;
   width: 125px;
   height: 30px;
-  color: gainsboro;
+  color: var(--main-border-color);
   font-size: 30px;
   line-height: 75%;
   position: relative;
@@ -65,7 +75,7 @@
 .product__raiting::before {
   position: absolute;
   content: "★★★★★";
-  color: gainsboro;
+  color: var(--main-border-color);
 }
 
 .product__rating_active {
@@ -79,7 +89,7 @@
 .product__rating_active::before {
   position: absolute;
   content: "★★★★★";
-  color: gold;
+  color: var(--stars-color);
 }
 
 .product__raiting span {
@@ -110,7 +120,7 @@
   height: 30px;
   text-decoration: none;
   text-align: center;
-  background-color: #e70;
+  background-color: var(--main-button-color);
   border-radius: 5px;
   font-size: 15px;
   color: white;
@@ -118,7 +128,7 @@
 }
 
 @media (max-width: 440px) {
-  .product__img,
+  .product__img-container,
   .product__description {
     max-width: 100%;
     width: 100%;
@@ -136,5 +146,10 @@
   .product__description-text {
     height: fit-content;
     margin: 15px 0;
+  }
+
+  .product__img {
+    height: 100%;
+    right: 0;
   }
 }

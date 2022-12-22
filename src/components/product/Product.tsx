@@ -1,36 +1,31 @@
-import React from 'react';
-import "./product.css"
+import React from "react";
+import "./product.css";
+import ProductResponse from "../../interfaces/ProductResponse";
 
-export function Product(props:{dataset:ProductResponse}) {
+export function Product(props: { product: ProductResponse }) {
+  const { product } = props;
   return (
-    <div className='product-container'>
-      <div style={{backgroundImage: `url(${props.dataset.thumbnail})`}} className = 'product__img'></div>
-      <div className='product__description'>
-        <span className='product__title'>{props.dataset.title}</span>
-        <p className='product__description-text'>{props.dataset.description}</p>
-        <div className='product__raiting'>
-          <div className='product__rating_active' style={{width: `calc(100%*(${props.dataset.rating}/5))`}}></div>
-          <span>{props.dataset.rating}</span>
+    <div className="product-container">
+      <div className="product__img-container">
+        <img src={product.thumbnail} alt="product" className="product__img" />
+      </div>
+      <div className="product__description">
+        <span className="product__title">{product.title}</span>
+        <p className="product__description-text">{product.description}</p>
+        <div className="product__raiting">
+          <div
+            className="product__rating_active"
+            style={{ width: `calc(100%*(${product.rating}/5))` }}
+          ></div>
+          <span>{product.rating}</span>
         </div>
       </div>
-      <div className='product__price'>
-        <span>From {props.dataset.price} Or</span>
-        <a href="#" className='add'>Add to cart</a>
+      <div className="product__price">
+        <span>From {product.price} Or</span>
+        <a href="#" className="add">
+          Add to cart
+        </a>
       </div>
     </div>
-  )
-}
-
-interface ProductResponse {
-  brand: string,
-  category: string,
-  description: string,
-  discountPercentage: number,
-  id: number,
-  images: string[],
-  price: number,
-  rating: number,
-  stock: number,
-  thumbnail: string,
-  title: string,
+  );
 }
