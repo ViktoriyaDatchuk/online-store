@@ -1,8 +1,8 @@
-import React from 'react';
+import { Main } from './pages/Main/Main';
 
 function App() {
   return (
-    <h1></h1>
+    <Main />
   )
 }
 
