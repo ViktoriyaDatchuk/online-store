@@ -1,4 +1,3 @@
-import React from "react";
 import "./product.css";
 import ProductResponse from "../../interfaces/ProductResponse";
 
