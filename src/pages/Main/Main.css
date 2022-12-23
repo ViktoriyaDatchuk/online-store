@@ -1,6 +1,8 @@
 .wrapper {
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  max-width: 1515px;
+  margin: 0 auto;
 }
