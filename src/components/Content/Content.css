@@ -1,0 +1,13 @@
+.mainContainer {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+.filtersSpace {
+    height: 500px;
+    background-color: black;
+}
+
+.products {
+    text-align: center;
+}
