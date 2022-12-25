@@ -10,16 +10,21 @@
 }
 
 .products {
+  display: flex;
   text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .controls {
   display: flex;
+  width: 100%;
   padding: 10px;
   height: 80px;
   justify-content: flex-start;
   align-items: center;
   border: 1px solid gainsboro;
+  justify-content: space-between;
 }
 
 .products__search-field {
@@ -35,4 +40,22 @@
 .products__search-field:focus {
   width: 50%;
   outline: none;
+}
+
+.controls__view-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #e70;
+  border-radius: 3px;
+}
+
+.controls__view-button:hover {
+  cursor: pointer;
+}
+
+.controls__view-button img {
+  width: 30px;
+  height: 30px;
+  filter: invert(100%);
 }

@@ -1,10 +1,12 @@
 import "./product.css";
 import ProductResponse from "../../interfaces/ProductResponse";
+import classNames from "classnames";
 
-export function Product(props: { product: ProductResponse }) {
-  const { product } = props;
+export function Product(props: { product: ProductResponse; isList: boolean }) {
+  const { product, isList } = props;
+  classNames("product-container", { tile: !isList });
   return (
-    <div className="product-container">
+    <div className={classNames()}>
       <div className="product__img-container">
         <img src={product.thumbnail} alt="product" className="product__img" />
       </div>
