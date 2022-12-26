@@ -1,3 +1,12 @@
+* {
+  --main-total-color: rgba(220, 220, 220, 0.521);
+  --main-button-color: #e70;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
 .mainContainer {
   display: grid;
   grid-template-columns: 25% 75%;
@@ -5,9 +14,36 @@
 
 .filtersSpace {
   height: 500px;
-  background-color: black;
+  padding: 10px 40px;
 }
 
 .products {
   text-align: center;
+}
+
+.notFound {
+  margin: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.total {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--main-total-color);
+  text-align: center;
+  font-size: 14px;
+}
+
+.resetFilters {
+  width: 100%;
+  margin-top: 20px;
+  padding: 5px 10px;
+  background-color: var(--main-button-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
 }
