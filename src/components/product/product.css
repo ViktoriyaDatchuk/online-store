@@ -32,6 +32,8 @@
 .product__title {
   font-size: 25px;
   font-weight: 600;
+  text-decoration: none;
+  color: black;
 }
 
 .product__title:hover {
