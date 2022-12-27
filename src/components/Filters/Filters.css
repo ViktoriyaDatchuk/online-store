@@ -10,11 +10,11 @@
 .filtersContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .filterItem {
-  max-height: 200px;
+  max-height: 160px;
   overflow-x: hidden;
 }
 
