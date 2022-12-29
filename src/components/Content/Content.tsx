@@ -3,12 +3,11 @@ import ProductResponse from "../../interfaces/ProductResponse";
 import "../Content/Content.css";
 import { Product } from "../product/Product";
 import listImg from "../../assets/img/listview.png";
-import tileImg from "../../assets/img/tileview.png";
+import cardImg from "../../assets/img/tileview.png";
 
-export function Content(props: { products: ProductResponse[] }) {
-  const { products } = props;
+export const Content = ({ products }: { products: ProductResponse[] }) => {
   const [value, setValue] = useState("");
-  const [isList, setView] = useState(true);
+  const [isList, setIsList] = useState(true);
 
   return (
     <main>
@@ -18,31 +17,29 @@ export function Content(props: { products: ProductResponse[] }) {
           <div className="controls">
             <input
               type="search"
-              name=""
-              id=""
               onChange={(event) => setValue(event.target.value)}
               className="products__search-field"
               placeholder="Search product"
             />
             <button
               className="controls__view-button"
-              onClick={() => setView(!isList)}
+              onClick={() => setIsList(!isList)}
             >
-              <img src={isList ? tileImg : listImg} alt="view" />
+              <img src={isList ? cardImg : listImg} alt="view" />
             </button>
           </div>
           {products
-            .filter((p) => {
+            .filter((product) => {
               return (
-                p.title.toLowerCase().includes(value.toLowerCase()) ||
-                p.category.toLowerCase().includes(value.toLowerCase())
+                product.title.toLowerCase().includes(value.toLowerCase()) ||
+                product.category.toLowerCase().includes(value.toLowerCase())
               );
             })
-            .map((p) => (
-              <Product key={p.id} product={p} isList={isList} />
+            .map((product) => (
+              <Product key={product.id} product={product} isList={isList} />
             ))}
         </div>
       </div>
     </main>
   );
-}
+};
