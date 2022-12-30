@@ -3,8 +3,8 @@ import "./Checkbox.css";
 interface CheckboxProps {
   category: string;
   name: string;
-  filters: (e: string, n: string) => void;
-  removeFilter: (e: string, n: string) => void;
+  addFilter: (n: string, e: string) => void;
+  removeFilter: (n: string, e: string) => void;
   filtersArray: string[];
 }
 
@@ -20,7 +20,7 @@ export function Checkbox(props: CheckboxProps) {
         checked={props.filtersArray.includes(props.category)}
         onChange={(e) => {
           if (e.target.checked) {
-            props.filters(e.target.name, e.target.value);
+            props.addFilter(e.target.name, e.target.value);
           } else {
             props.removeFilter(e.target.name, e.target.value);
           }

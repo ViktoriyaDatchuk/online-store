@@ -4,8 +4,8 @@ import "./FormForCheckbox.css";
 interface FormForCheckboxProps {
   type: Set<string>;
   name: string;
-  filters: (e: string, n: string) => void;
-  removeFilter: (e: string, n: string) => void;
+  addFilter: (n: string, e: string) => void;
+  removeFilter: (n: string, e: string) => void;
   filtersArray: string[];
 }
 
@@ -17,7 +17,8 @@ export function FormForCheckbox(props: FormForCheckboxProps) {
           key={item}
           category={item}
           name={props.name}
-          filters={props.filters}
+          // filterFunction={props.filterFunction}
+          addFilter={props.addFilter}
           removeFilter={props.removeFilter}
           filtersArray={props.filtersArray}
         />

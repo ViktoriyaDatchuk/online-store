@@ -4,9 +4,9 @@ import "./Filters.css";
 
 interface FiltersProps {
   product: ProductResponse[];
-  filters: (e: string, n: string) => void;
-  removeFilter: (e: string, n: string) => void;
-  filtersCat: string[];
+  addFilter: (n: string, e: string) => void;
+  removeFilter: (n: string, e: string) => void;
+  filtersCategory: string[];
   filtersBrand: string[];
 }
 
@@ -25,9 +25,9 @@ export function Filters(props: FiltersProps) {
         <FormForCheckbox
           type={categories}
           name="categories"
-          filters={props.filters}
+          addFilter={props.addFilter}
           removeFilter={props.removeFilter}
-          filtersArray={props.filtersCat}
+          filtersArray={props.filtersCategory}
         />
       </div>
       <div className="filterItem">
@@ -35,7 +35,7 @@ export function Filters(props: FiltersProps) {
         <FormForCheckbox
           type={brands}
           name="brands"
-          filters={props.filters}
+          addFilter={props.addFilter}
           removeFilter={props.removeFilter}
           filtersArray={props.filtersBrand}
         />

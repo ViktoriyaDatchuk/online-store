@@ -10,111 +10,118 @@ interface ContentProps {
 }
 
 export function Content(props: ContentProps) {
-  const [filtersCat, setFiltersCat] = useState<string[]>([]);
+  const [filtersCategory, setFiltersCategory] = useState<string[]>([]);
   const [filtersBrand, setFiltersBrand] = useState<string[]>([]);
-  const [sortProd, setsortProd] = useState<ProductResponse[]>(props.prods);
-  const [minValuePrice, setMinValuePrice] = useState<number>(getMinPrice(props.prods));
-	const [maxValuePrice, setMaxValuePrice] = useState<number>(getMaxPrice(props.prods));
-  const [minValueStock, setMinValueStock] = useState<number>(getMinStock(props.prods));
-	const [maxValueStock, setMaxValueStock] = useState<number>(getMaxStock(props.prods));
+  const [sortProducts, setsortProducts] = useState<ProductResponse[]>(
+    props.prods
+  );
+  const [minValuePrice, setMinValuePrice] = useState<number>(
+    getMinPrice(props.prods)
+  );
+  const [maxValuePrice, setMaxValuePrice] = useState<number>(
+    getMaxPrice(props.prods)
+  );
+  const [minValueStock, setMinValueStock] = useState<number>(
+    getMinStock(props.prods)
+  );
+  const [maxValueStock, setMaxValueStock] = useState<number>(
+    getMaxStock(props.prods)
+  );
 
-  const filterProd = (name: string, value: string) => {
+  const addFilter = (name: string, value: string) => {
     if (name === "categories") {
-      setFiltersCat([...filtersCat, value]);
+      setFiltersCategory([...filtersCategory, value]);
     } else {
       setFiltersBrand([...filtersBrand, value]);
     }
   };
 
   const removeFilter = (name: string, value: string) => {
-    setsortProd(props.prods);
+    setsortProducts(props.prods);
     if (name === "categories") {
-      setFiltersCat(filtersCat.filter((item) => item !== value));
+      setFiltersCategory(filtersCategory.filter((item) => item !== value));
     } else {
       setFiltersBrand(filtersBrand.filter((item) => item !== value));
     }
   };
 
   useEffect(() => {
-    setsortProd(filterFunc());
-  }, [filtersCat, filtersBrand]);
+    filterFunction();
+  }, [filtersCategory, filtersBrand]);
 
-  useEffect(() => {
-    setsortProd(filterRange());
-  }, [maxValuePrice, minValuePrice, maxValueStock, minValueStock]);
-
-  const filterFunc = () => {
-    return sortProd
-      .filter((item) => {
-        if (filtersCat.length) {
-          return filtersCat.includes(item.category);
-        } else {
-          return true;
-        }
-      })
-      .filter((item) => {
-        if (filtersBrand.length) {
-          return filtersBrand.includes(item.brand);
-        } else {
-          return true;
-        }
-      });
+  const filterFunction = () => {
+    setsortProducts(
+      props.prods
+        .filter((item) => {
+          if (filtersCategory.length) {
+            return filtersCategory.includes(item.category);
+          } else {
+            return true;
+          }
+        })
+        .filter((item) => {
+          if (filtersBrand.length) {
+            return filtersBrand.includes(item.brand);
+          } else {
+            return true;
+          }
+        })
+        .filter((item) => {
+          return item.price >= minValuePrice && item.price <= maxValuePrice;
+        })
+        .filter((item) => {
+          return item.stock >= minValueStock && item.stock <= maxValueStock;
+        })
+    );
   };
 
-  const filterRange = () => {
-    return sortProd
-    .filter((item) => {
-      return item.price >= minValuePrice && item.price <= maxValuePrice;
-    })
-    .filter((item) => {
-      return item.stock >= minValueStock && item.stock <= maxValueStock;
-    })
-
-  }
-
   const resetFilters = () => {
-    setsortProd(props.prods);
+    setsortProducts(props.prods);
     setFiltersBrand([]);
-    setFiltersCat([]);
+    setFiltersCategory([]);
+    setMinValuePrice(getMinPrice(props.prods));
+    setMaxValuePrice(getMaxPrice(props.prods));
+    setMinValueStock(getMinStock(props.prods));
+    setMaxValueStock(getMaxStock(props.prods));
   };
 
   function getMaxPrice(products: ProductResponse[]) {
     let max = products[0].price;
-    products.forEach(elem => {
+    products.forEach((elem) => {
       if (elem.price > max) {
         max = elem.price;
       }
-    })
+    });
     return max;
   }
 
   function getMinPrice(products: ProductResponse[]) {
     let min = products[0].price;
-    products.forEach(elem => {
+    products.forEach((elem) => {
       if (elem.price < min) {
         min = elem.price;
       }
-    })
+    });
     return min;
   }
 
   function getMaxStock(products: ProductResponse[]) {
     let max = products[0].stock;
-    products.forEach(elem => {
+    products.forEach((elem) => {
       if (elem.stock > max) {
         max = elem.stock;
       }
-    })
+    });
     return max;
   }
 
   function getMinStock(products: ProductResponse[]) {
     let min = products[0].stock;
-    products.forEach(elem => {
+    products.forEach((elem) => {
       if (elem.stock < min) {
         min = elem.stock;
       }
-    })
+    });
     return min;
   }
 
@@ -124,9 +131,9 @@ export function Content(props: ContentProps) {
         <div className="filtersSpace">
           <Filters
             product={props.prods}
-            filters={filterProd}
+            addFilter={addFilter}
             removeFilter={removeFilter}
-            filtersCat={filtersCat}
+            filtersCategory={filtersCategory}
             filtersBrand={filtersBrand}
           />
           <div className="sliderContainer">
@@ -135,13 +142,14 @@ export function Content(props: ContentProps) {
               min={getMinPrice(props.prods)}
               max={getMaxPrice(props.prods)}
               step={1}
-              minValue={getMinPrice(sortProd)}
-              maxValue={getMaxPrice(sortProd)}
+              minValue={minValuePrice}
+              maxValue={maxValuePrice}
               ruler="false"
               barInnerColor="#e70"
               onInput={(e: ChangeResult) => {
                 setMinValuePrice(e.minValue);
                 setMaxValuePrice(e.maxValue);
+                filterFunction();
               }}
             ></MultiRangeSlider>
           </div>
@@ -151,24 +159,25 @@ export function Content(props: ContentProps) {
               min={getMinStock(props.prods)}
               max={getMaxStock(props.prods)}
               step={1}
-              minValue={getMinStock(sortProd)}
-              maxValue={getMaxStock(sortProd)}
+              minValue={minValueStock}
+              maxValue={maxValueStock}
               ruler="false"
               barInnerColor="#e70"
               onInput={(e: ChangeResult) => {
                 setMinValueStock(e.minValue);
                 setMaxValueStock(e.maxValue);
+                filterFunction();
               }}
             ></MultiRangeSlider>
           </div>
-          <div className="total">{sortProd.length} products found</div>
+          <div className="total">{sortProducts.length} products found</div>
           <button className="resetFilters" onClick={resetFilters}>
             Reset Filters
           </button>
         </div>
         <div className="products">
-          {sortProd.length ? (
-            sortProd.map((prod) => <Product key={prod.id} product={prod} />)
+          {sortProducts.length ? (
+            sortProducts.map((prod) => <Product key={prod.id} product={prod} />)
           ) : (
             <div className="notFound">Products not found</div>
           )}
