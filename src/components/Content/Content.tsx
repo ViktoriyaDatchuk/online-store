@@ -4,41 +4,39 @@ import { useState, useEffect } from "react";
 import MultiRangeSlider, { ChangeResult } from "multi-range-slider-react";
 import { Filters } from "../Filters/Filters";
 import { Product } from "../product/Product";
+import listImg from "../../assets/img/listview.png";
+import cardImg from "../../assets/img/tileview.png";
 
-interface ContentProps {
-  prods: ProductResponse[];
-}
-
-export const Content = (props: ContentProps) => {
+export const Content = ({ products }: { products: ProductResponse[] }) => {
   const [filtersCategory, setFiltersCategory] = useState<string[]>([]);
   const [filtersBrand, setFiltersBrand] = useState<string[]>([]);
-  const [sortProducts, setsortProducts] = useState<ProductResponse[]>(
-    props.prods
-  );
+  const [sortProducts, setsortProducts] = useState<ProductResponse[]>(products);
   const [minValuePrice, setMinValuePrice] = useState<number>(
     Math.min.apply(
       null,
-      props.prods.map((item) => item.price)
+      products.map((item) => item.price)
     )
   );
   const [maxValuePrice, setMaxValuePrice] = useState<number>(
     Math.max.apply(
       null,
-      props.prods.map((item) => item.price)
+      products.map((item) => item.price)
     )
   );
   const [minValueStock, setMinValueStock] = useState<number>(
     Math.min.apply(
       null,
-      props.prods.map((item) => item.stock)
+      products.map((item) => item.stock)
     )
   );
   const [maxValueStock, setMaxValueStock] = useState<number>(
     Math.max.apply(
       null,
-      props.prods.map((item) => item.stock)
+      products.map((item) => item.stock)
     )
   );
+  const [value, setValue] = useState("");
+  const [isList, setIsList] = useState(true);
 
   const addFilter = (name: string, value: string) => {
     if (name === "categories") {
@@ -49,7 +47,7 @@ export const Content = (props: ContentProps) => {
   };
 
   const removeFilter = (name: string, value: string) => {
-    setsortProducts(props.prods);
+    setsortProducts(products);
     if (name === "categories") {
       setFiltersCategory(filtersCategory.filter((item) => item !== value));
     } else if (name === "brands") {
@@ -63,7 +61,7 @@ export const Content = (props: ContentProps) => {
 
   const filterFunction = () => {
     setsortProducts(
-      props.prods
+      products
         .filter((item) => {
           if (filtersCategory.length) {
             return filtersCategory.includes(item.category);
@@ -78,41 +76,41 @@ export const Content = (props: ContentProps) => {
             return true;
           }
         })
-        .filter((item) => {
-          return item.price >= minValuePrice && item.price <= maxValuePrice;
-        })
-        .filter((item) => {
-          return item.stock >= minValueStock && item.stock <= maxValueStock;
-        })
+      .filter((item) => {
+        return item.price >= minValuePrice && item.price <= maxValuePrice;
+      })
+      .filter((item) => {
+        return item.stock >= minValueStock && item.stock <= maxValueStock;
+      })
     );
   };
 
   const resetFilters = () => {
-    setsortProducts(props.prods);
+    setsortProducts(products);
     setFiltersBrand([]);
     setFiltersCategory([]);
     setMinValuePrice(
       Math.min.apply(
         null,
-        props.prods.map((item) => item.price)
+        products.map((item) => item.price)
       )
     );
     setMaxValuePrice(
       Math.max.apply(
         null,
-        props.prods.map((item) => item.price)
+        products.map((item) => item.price)
       )
     );
     setMinValueStock(
       Math.min.apply(
         null,
-        props.prods.map((item) => item.stock)
+        products.map((item) => item.stock)
       )
     );
     setMaxValueStock(
       Math.max.apply(
         null,
-        props.prods.map((item) => item.stock)
+        products.map((item) => item.stock)
       )
     );
   };
@@ -122,7 +120,7 @@ export const Content = (props: ContentProps) => {
       <div className="mainContainer">
         <div className="filtersSpace">
           <Filters
-            products={props.prods}
+            products={products}
             addFilter={addFilter}
             removeFilter={removeFilter}
             filtersCategory={filtersCategory}
@@ -133,11 +131,11 @@ export const Content = (props: ContentProps) => {
             <MultiRangeSlider
               min={Math.min.apply(
                 null,
-                props.prods.map((item) => item.price)
+                products.map((item) => item.price)
               )}
               max={Math.max.apply(
                 null,
-                props.prods.map((item) => item.price)
+                products.map((item) => item.price)
               )}
               step={1}
               minValue={minValuePrice}
@@ -150,17 +148,17 @@ export const Content = (props: ContentProps) => {
                 filterFunction();
               }}
             ></MultiRangeSlider>
-          </div>
-          <div className="sliderContainer">
+          </div> 
+            <div className="sliderContainer">
             <h4 className="sliderTitle">Stock</h4>
             <MultiRangeSlider
               min={Math.min.apply(
                 null,
-                props.prods.map((item) => item.stock)
+                products.map((item) => item.stock)
               )}
               max={Math.max.apply(
                 null,
-                props.prods.map((item) => item.stock)
+                products.map((item) => item.stock)
               )}
               step={1}
               minValue={minValueStock}
@@ -170,8 +168,7 @@ export const Content = (props: ContentProps) => {
               onInput={(e: ChangeResult) => {
                 setMinValueStock(e.minValue);
                 setMaxValueStock(e.maxValue);
-                filterFunction();
-              }}
+                filterFunction();              }}
             ></MultiRangeSlider>
           </div>
           <div className="total">{sortProducts.length} products found</div>
@@ -180,8 +177,31 @@ export const Content = (props: ContentProps) => {
           </button>
         </div>
         <div className="products">
+          <div className="controls">
+            <input
+              type="search"
+              onChange={(event) => setValue(event.target.value)}
+              className="products__search-field"
+              placeholder="Search product"
+            />
+            <button
+              className="controls__view-button"
+              onClick={() => setIsList(!isList)}
+            >
+              <img src={isList ? cardImg : listImg} alt="view" />
+            </button>
+          </div>
           {sortProducts.length ? (
-            sortProducts.map((prod) => <Product key={prod.id} product={prod} />)
+            sortProducts
+              .filter((product) => {
+                return (
+                  product.title.toLowerCase().includes(value.toLowerCase()) ||
+                  product.category.toLowerCase().includes(value.toLowerCase())
+                );
+              })
+              .map((product) => (
+                <Product key={product.id} product={product} isList={isList} />
+              ))
           ) : (
             <div className="notFound">Products not found</div>
           )}
