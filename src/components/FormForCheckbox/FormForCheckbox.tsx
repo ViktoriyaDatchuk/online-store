@@ -9,18 +9,23 @@ interface FormForCheckboxProps {
   filtersArray: string[];
 }
 
-export function FormForCheckbox(props: FormForCheckboxProps) {
+export function FormForCheckbox({
+  type,
+  name,
+  addFilter,
+  removeFilter,
+  filtersArray,
+}: FormForCheckboxProps) {
   return (
     <form className="filterForm">
-      {Array.from(props.type).map((item) => (
+      {Array.from(type).map((item) => (
         <Checkbox
           key={item}
           category={item}
-          name={props.name}
-          // filterFunction={props.filterFunction}
-          addFilter={props.addFilter}
-          removeFilter={props.removeFilter}
-          filtersArray={props.filtersArray}
+          name={name}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          filtersArray={filtersArray}
         />
       ))}
     </form>

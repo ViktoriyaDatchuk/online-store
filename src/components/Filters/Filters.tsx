@@ -3,17 +3,23 @@ import { FormForCheckbox } from "../FormForCheckbox/FormForCheckbox";
 import "./Filters.css";
 
 interface FiltersProps {
-  product: ProductResponse[];
+  products: ProductResponse[];
   addFilter: (n: string, e: string) => void;
   removeFilter: (n: string, e: string) => void;
   filtersCategory: string[];
   filtersBrand: string[];
 }
 
-export function Filters(props: FiltersProps) {
+export const Filters = ({
+  products,
+  addFilter,
+  removeFilter,
+  filtersCategory,
+  filtersBrand,
+}: FiltersProps) => {
   const categories = new Set<string>();
   const brands = new Set<string>();
-  props.product.map((product) => {
+  products.map((product) => {
     categories.add(product.category);
     brands.add(product.brand);
   });
@@ -25,9 +31,9 @@ export function Filters(props: FiltersProps) {
         <FormForCheckbox
           type={categories}
           name="categories"
-          addFilter={props.addFilter}
-          removeFilter={props.removeFilter}
-          filtersArray={props.filtersCategory}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          filtersArray={filtersCategory}
         />
       </div>
       <div className="filterItem">
@@ -35,11 +41,11 @@ export function Filters(props: FiltersProps) {
         <FormForCheckbox
           type={brands}
           name="brands"
-          addFilter={props.addFilter}
-          removeFilter={props.removeFilter}
-          filtersArray={props.filtersBrand}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          filtersArray={filtersBrand}
         />
       </div>
     </div>
   );
-}
+};

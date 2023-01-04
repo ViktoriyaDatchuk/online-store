@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import "./Checkbox.css";
 
 interface CheckboxProps {
@@ -8,25 +9,33 @@ interface CheckboxProps {
   filtersArray: string[];
 }
 
-export function Checkbox(props: CheckboxProps) {
+export function Checkbox({
+  category,
+  name,
+  addFilter,
+  removeFilter,
+  filtersArray,
+}: CheckboxProps) {
+  const checkboxClickHandler = (event: FormEvent<HTMLInputElement>) => {
+    if (event.currentTarget.checked) {
+      addFilter(event.currentTarget.name, event.currentTarget.value);
+    } else {
+      removeFilter(event.currentTarget.name, event.currentTarget.value);
+    }
+  };
+
   return (
     <label className="checkboxItem">
       <input
         className="checkboxInput"
         type="checkbox"
-        id={props.category}
-        name={props.name}
-        value={props.category}
-        checked={props.filtersArray.includes(props.category)}
-        onChange={(e) => {
-          if (e.target.checked) {
-            props.addFilter(e.target.name, e.target.value);
-          } else {
-            props.removeFilter(e.target.name, e.target.value);
-          }
-        }}
+        id={category}
+        name={name}
+        value={category}
+        checked={filtersArray.includes(category)}
+        onChange={checkboxClickHandler}
       />
-      {props.category}
+      {category}
     </label>
   );
 }
