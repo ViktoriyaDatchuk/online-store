@@ -1,17 +1,24 @@
 import "./product.css";
 import ProductResponse from "../../interfaces/ProductResponse";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-export function Product(props: { product: ProductResponse; isList: boolean }) {
-  const { product, isList } = props;
-
+export const Product = ({
+  product,
+  isList,
+}: {
+  product: ProductResponse;
+  isList: boolean;
+}) => {
   return (
-    <div className={classNames("product-container", { tile: !isList })}>
+    <div className={classNames("product-container", { card: !isList })}>
       <div className="product__img-container">
         <img src={product.thumbnail} alt="product" className="product__img" />
       </div>
       <div className="product__description">
-        <span className="product__title">{product.title}</span>
+        <Link to={`/product/${product.id}`} className="product__title">
+          {product.title}
+        </Link>
         <p className="product__description-text">{product.description}</p>
         <div className="product__raiting">
           <div
@@ -29,4 +36,4 @@ export function Product(props: { product: ProductResponse; isList: boolean }) {
       </div>
     </div>
   );
-}
+};
