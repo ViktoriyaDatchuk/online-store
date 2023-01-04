@@ -14,7 +14,7 @@ export function Main() {
 
   async function getAllProducts() {
     try {
-      const res = await axios.get("https://dummyjson.com/products?limit=100");
+      const res = await axios.get("https://dummyjson.com/products?limit=30");
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);

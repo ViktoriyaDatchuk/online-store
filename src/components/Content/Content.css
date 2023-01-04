@@ -1,3 +1,12 @@
+* {
+  --main-total-color: rgba(220, 220, 220, 0.521);
+  --main-button-color: #e70;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
 .mainContainer {
   display: grid;
   grid-template-columns: 25% 75%;
@@ -7,8 +16,7 @@
 }
 
 .filtersSpace {
-  background-color: black;
-  border: 1px solid var(--main-border-color);
+  padding: 10px 40px;
 }
 
 .products {
@@ -59,5 +67,41 @@
 .controls__view-button img {
   width: 30px;
   height: 30px;
-  filter: invert(100%);
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+}
+
+.notFound {
+  margin: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.total {
+  width: 100%;
+  margin-top: 15px;
+  padding: 5px;
+  background-color: var(--main-total-color);
+  text-align: center;
+  font-size: 14px;
+}
+
+.resetFilters {
+  width: 100%;
+  margin-top: 15px;
+  padding: 5px 10px;
+  background-color: var(--main-button-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.sliderContainer {
+  margin-top: 10px;
+}
+
+.sliderTitle {
+  margin: 3px 0;
 }
