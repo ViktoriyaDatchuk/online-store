@@ -1,6 +1,7 @@
 import "./Header.css";
 import LogoImg from "../../assets/img/orliner-logo.png";
 import { totalAmount, totalPrice } from "../../stubs/stubs";
+import { Link } from "react-router-dom";
 
 export function Header() {
   return (
@@ -10,9 +11,11 @@ export function Header() {
         <div>
           <span className="totalPrice">Total: {totalPrice}</span>
         </div>
-        <div className="cart">
-          <div className="cartCounter">{totalAmount}</div>
-        </div>
+        <Link to="/cart">
+          <div className="cart">
+            <div className="cartCounter">{totalAmount}</div>
+          </div>
+        </Link>
       </div>
     </header>
   );
