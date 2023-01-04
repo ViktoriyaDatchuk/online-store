@@ -13,6 +13,11 @@ export function Footer() {
             image={githubImg}
             className="iconGithub"
           />
+          <Icon 
+            link="https://github.com/proboynick"
+            image={githubImg}
+            className="iconGithub2"
+          />
           <Icon
             link="https://rs.school/js/"
             image={rsschoolImg}

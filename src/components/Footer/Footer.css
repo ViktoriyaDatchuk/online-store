@@ -21,9 +21,15 @@
   gap: 20px;
 }
 
-.iconGithub {
+.iconGithub,
+.iconGithub2 {
   width: 31px;
   height: 31px;
+}
+
+.iconGithub2 {
+  -webkit-filter: brightness(0) saturate(100%);
+          filter: brightness(0) saturate(100%);
 }
 
 .iconRsschool {
@@ -32,6 +38,7 @@
 }
 
 .iconGithub:hover,
+.iconGithub2:hover,
 .iconRsschool:hover {
   -webkit-filter: brightness(0) saturate(100%) invert(78%) sepia(77%)
     saturate(469%) hue-rotate(353deg) brightness(101%) contrast(105%);
