@@ -1,0 +1,87 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.description-container {
+  height: 100%;
+  border: 1px solid gainsboro;
+  border-top: none;
+  border-bottom: none;
+  padding: 20px;
+}
+
+.product-path {
+  margin: 10px 0;
+  color: gainsboro;
+}
+
+.images {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.main-image {
+  display: block;
+  height: 500px;
+  width: auto;
+  margin: 0 auto;
+  transition: 0.5s;
+}
+
+.images__additional {
+  display: flex;
+  width: 80%;
+  height: fit-content;
+  overflow-x: auto;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.add-image {
+  height: 100px;
+  margin: 0 5px;
+  filter: brightness(75%);
+}
+
+.add-image:hover {
+  cursor: pointer;
+  filter: brightness(100%);
+}
+
+.product-desription {
+  width: 100%;
+  border-top: 1px solid gainsboro;
+  font-size: 18px;
+  color: gray;
+  padding-top: 10px;
+  line-height: 200%;
+  font-weight: 600;
+  list-style: none;
+}
+
+.product-desription span {
+  color: black;
+  font-weight: 700;
+}
+
+.description__title {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.description__title h1 {
+  margin-right: auto;
+}
+
+.description__title .add {
+  margin-left: 20px;
+  width: 100px;
+}
