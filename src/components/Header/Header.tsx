@@ -7,7 +7,9 @@ export function Header() {
   return (
     <header>
       <div className="container">
-        <img src={LogoImg} alt="orliner" className="logoImg" />
+        <Link to="/">
+          <img src={LogoImg} alt="orliner" className="logoImg" />
+        </Link>
         <div>
           <span className="totalPrice">Total: {totalPrice}</span>
         </div>
