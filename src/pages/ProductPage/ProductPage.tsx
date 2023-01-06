@@ -5,6 +5,7 @@ import ProductResponse from "../../interfaces/ProductResponse";
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
 import { Images } from "../../components/Images/Images";
+import { AddBtn } from "../../components/AddBtn/AddBtn";
 import "./ProductPage.css";
 
 export function ProductPage() {
@@ -26,14 +27,12 @@ export function ProductPage() {
   }
 
   return (
-    <div className="wrapper">
+    <div className="main-container">
       <Header />
       <div className="description-container">
         <div className="description__title">
           <h1 className="">{product.title} in catalog Orliner</h1>
-          <a href="#" className="add">
-            Add to cart
-          </a>
+          <AddBtn product={product} />
           <a href="#" className="add">
             Buy now
           </a>
@@ -47,6 +46,14 @@ export function ProductPage() {
           <li>
             <span>Description: </span>
             {product.description}
+          </li>
+          <li>
+            <span>Category: </span>
+            {product.category}
+          </li>
+          <li>
+            <span>Brand: </span>
+            {product.brand}
           </li>
           <li>
             <span>Rating: </span>

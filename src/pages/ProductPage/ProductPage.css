@@ -1,5 +1,5 @@
-.wrapper {
-  height: 100vh;
+.main-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   max-width: 1400px;
@@ -7,11 +7,11 @@
 }
 
 .description-container {
-  height: 100%;
   border: 1px solid gainsboro;
   border-top: none;
   border-bottom: none;
   padding: 20px;
+  flex: 1 1 auto;
 }
 
 .product-path {
@@ -63,6 +63,7 @@
   line-height: 200%;
   font-weight: 600;
   list-style: none;
+  margin-bottom: 40px;
 }
 
 .product-desription span {
