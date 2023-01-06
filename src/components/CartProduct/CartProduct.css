@@ -18,12 +18,17 @@
 }
 
 .productImgContainer {
-  max-width: 20%;
-  height: 100%;
+  max-width: 200px;
+  width: 100%;
+  height: 140px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .productImg {
-  width: 100%;
+  height: 100%;
 }
 
 .productDescription {

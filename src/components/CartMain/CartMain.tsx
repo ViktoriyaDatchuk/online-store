@@ -2,12 +2,16 @@ import { stubProducts, totalAmount, totalPrice } from "../../stubs/stubs";
 import { CartProduct } from "../CartProduct/CartProduct";
 import "./CartMain.css";
 import catImg from "../../assets/img/bg-cat.png";
+import { Modal } from "../Modal/Modal";
+import { useState } from "react";
 
 export const CartMain = () => {
+  const [modal, setModal] = useState(false);
+
   return (
-    <main>
+    <main className="cartMain">
       {totalAmount > 0 ? (
-        <div className="cartMainWrapper">
+        <>
           <div className="totalInfo">
             <h2>Cart</h2>
             <div className="totalInfoContainer">
@@ -34,7 +38,9 @@ export const CartMain = () => {
                   Promo for test: &apos;orliner&apos;
                 </span>
               </div>
-              <button className="buyButton">Buy</button>
+              <button className="buyButton" onClick={() => setModal(true)}>
+                Buy
+              </button>
             </div>
           </div>
           <div className="productsArea">
@@ -46,13 +52,14 @@ export const CartMain = () => {
               />
             ))}
           </div>
-        </div>
+        </>
       ) : (
         <div className="emptyCart">
           <img src={catImg} alt="emtyCart" className="emptyCartImg"></img>
           <span className="emptyCartText">Cart is empty</span>
         </div>
       )}
+      {modal && <Modal onClose={() => setModal(false)} />}
     </main>
   );
 };
