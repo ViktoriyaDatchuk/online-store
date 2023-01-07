@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Modal.css";
 
 interface ModalProps {
@@ -23,7 +23,7 @@ export const Modal = ({ onClose }: ModalProps) => {
   const [nameError, setNameError] = useState("Error! Empty value.");
   const [phoneError, setPhoneError] = useState("Error! Empty value.");
   const [addressError, setAddressError] = useState("Error! Empty value.");
-  const [emailError, setEmailErrorError] = useState("Error! Empty value.");
+  const [emailError, setEmailError] = useState("Error! Empty value.");
   const [cardNumberError, setCardNumberError] = useState("Error! Empty value.");
   const [validError, setValidError] = useState("Error! Empty value.");
   const [cvvError, setCvvError] = useState("Error! Empty value.");
@@ -43,6 +43,70 @@ export const Modal = ({ onClose }: ModalProps) => {
       });
     }
   }, [name]);
+
+  useEffect(() => {
+    if (phone[0] !== "+" || phone.length < 10 || /\D/.test(phone.slice(1))) {
+      setPhoneError("Error! Incorrect value!");
+    } else {
+      setPhoneError("");
+    }
+  }, [phone]);
+
+  useEffect(() => {
+    setAddressError("");
+    const arrayAddress = address.trim().split(" ");
+    if (!arrayAddress[0]) {
+      setAddressError("Error! Empty value.");
+    } else if (arrayAddress.length < 3) {
+      setAddressError("Error! You need to enter at least 3 words!");
+    } else {
+      arrayAddress.forEach((word) => {
+        if (word.length < 5) {
+          setAddressError("Error! Your words are too short!");
+        }
+      });
+    }
+  }, [address]);
+
+  useEffect(() => {
+    const emailReg =
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    if (!emailReg.test(email)) {
+      setEmailError("Error! Invalid email!");
+    } else {
+      setEmailError("");
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (cardNumber.length !== 16 || /\D/.test(cardNumber)) {
+      setCardNumberError("Error! Incorrect card number!");
+    } else {
+      setCardNumberError("");
+    }
+  }, [cardNumber]);
+
+  useEffect(() => {
+    if (valid[2] === "/" && Number(valid.slice(0, 2)) < 12) {
+      setValidError("");
+    } else if (
+      valid.length !== 4 ||
+      /\D/.test(valid) ||
+      Number(valid.slice(0, 2)) > 12
+    ) {
+      setValidError("Error! Incorrect value!");
+    } else {
+      setValid(valid.slice(0, 2) + "/" + valid.slice(2));
+    }
+  }, [valid]);
+
+  useEffect(() => {
+    if (cvv.length !== 3 || /\D/.test(cvv)) {
+      setCvvError("Error! Incorrect cvv");
+    } else {
+      setCvvError("");
+    }
+  }, [cvv]);
 
   const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     switch (event.target.name) {
@@ -70,11 +134,15 @@ export const Modal = ({ onClose }: ModalProps) => {
     }
   };
 
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div className="modalArea" onClick={onClose}></div>
       <div className="modalContent">
-        <form className="modalForm">
+        <form className="modalForm" onSubmit={submitHandler}>
           <h3 className="modalTitle">Personal info</h3>
           <input
             onBlur={(e) => blurHandler(e)}
@@ -90,6 +158,7 @@ export const Modal = ({ onClose }: ModalProps) => {
           )}
           <input
             onBlur={(e) => blurHandler(e)}
+            onChange={(e) => setPhone(e.target.value)}
             name="phone"
             value={phone}
             type="text"
@@ -101,6 +170,7 @@ export const Modal = ({ onClose }: ModalProps) => {
           )}
           <input
             onBlur={(e) => blurHandler(e)}
+            onChange={(e) => setAddress(e.target.value)}
             name="address"
             value={address}
             type="text"
@@ -112,6 +182,7 @@ export const Modal = ({ onClose }: ModalProps) => {
           )}
           <input
             onBlur={(e) => blurHandler(e)}
+            onChange={(e) => setEmail(e.target.value)}
             name="email"
             value={email}
             type="email"
@@ -128,6 +199,7 @@ export const Modal = ({ onClose }: ModalProps) => {
                 <div></div>
                 <input
                   onBlur={(e) => blurHandler(e)}
+                  onChange={(e) => setCardNumber(e.target.value)}
                   name="cardNumber"
                   value={cardNumber}
                   type="text"
@@ -140,6 +212,7 @@ export const Modal = ({ onClose }: ModalProps) => {
                   VALID:
                   <input
                     onBlur={(e) => blurHandler(e)}
+                    onChange={(e) => setValid(e.target.value)}
                     name="valid"
                     value={valid}
                     type="text"
@@ -151,6 +224,7 @@ export const Modal = ({ onClose }: ModalProps) => {
                   CVV:
                   <input
                     onBlur={(e) => blurHandler(e)}
+                    onChange={(e) => setCvv(e.target.value)}
                     name="cvv"
                     value={cvv}
                     type="text"
@@ -168,7 +242,7 @@ export const Modal = ({ onClose }: ModalProps) => {
             <div className="errorMessage">{`Valid - ${validError}`}</div>
           )}
           {cvvDirty && cvvError && (
-            <div className="errorMessage">{`Cvv - ${cvvError}`}</div>
+            <div className="errorMessage">{`CVV - ${cvvError}`}</div>
           )}
           <button className="modalButton">Confirm</button>
         </form>
