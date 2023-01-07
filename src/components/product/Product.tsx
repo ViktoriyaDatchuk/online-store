@@ -2,6 +2,7 @@ import "./product.css";
 import ProductResponse from "../../interfaces/ProductResponse";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import { AddBtn } from "../AddBtn/AddBtn";
 
 export const Product = ({
   product,
@@ -30,9 +31,7 @@ export const Product = ({
       </div>
       <div className="product__price">
         <span>From {product.price} Or</span>
-        <a href="#" className="add">
-          Add to cart
-        </a>
+        <AddBtn product={product} />
       </div>
     </div>
   );
