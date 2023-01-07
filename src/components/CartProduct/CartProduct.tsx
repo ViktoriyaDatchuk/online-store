@@ -1,13 +1,27 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import ProductResponse from "../../interfaces/ProductResponse";
+import {
+  cartProduct,
+  decrementProductCount,
+  incrementProductCount,
+} from "../../redux/cartSlice";
 import "./CartProduct.css";
 
-interface CartProductProps {
-  product: ProductResponse;
-  count: number;
-}
+export const CartProduct = ({
+  product,
+}: {
+  key: number;
+  product: cartProduct;
+}) => {
+  const dispatch = useDispatch();
 
-export const CartProduct = ({ product, count }: CartProductProps) => {
+  const incrementCount = () => {
+    dispatch(incrementProductCount(product));
+  };
+
+  const decrementCount = () => {
+    dispatch(decrementProductCount(product));
+  };
   return (
     <div className="productContainer">
       <div className="productImgContainer">
@@ -28,11 +42,15 @@ export const CartProduct = ({ product, count }: CartProductProps) => {
       <div className="amountContainer">
         <div className="changeAmountContainer">
           <div className="changeAmount">
-            <button className="changeAmountButton">+</button>
-            {count}
-            <button className="changeAmountButton">-</button>
+            <button className="changeAmountButton" onClick={decrementCount}>
+              -
+            </button>
+            {product.count}
+            <button className="changeAmountButton" onClick={incrementCount}>
+              +
+            </button>
           </div>
-          <div className="priceValue">{product.price * count} Or</div>
+          <div className="priceValue">{product.price * product.count} Or</div>
         </div>
         <div className="stockValue">Stock: {product.stock}</div>
       </div>
