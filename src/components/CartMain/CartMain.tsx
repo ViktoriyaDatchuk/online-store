@@ -1,23 +1,27 @@
-import { stubProducts, totalAmount, totalPrice } from "../../stubs/stubs";
 import { CartProduct } from "../CartProduct/CartProduct";
 import "./CartMain.css";
 import catImg from "../../assets/img/bg-cat.png";
 import { Modal } from "../Modal/Modal";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export const CartMain = () => {
+  const { items, totalPrice } = useSelector(
+    (state: RootState) => state.cartSlice
+  );
   const [modal, setModal] = useState(false);
 
   return (
     <main className="cartMain">
-      {totalAmount > 0 ? (
+      {items.length > 0 ? (
         <>
           <div className="totalInfo">
             <h2>Cart</h2>
             <div className="totalInfoContainer">
               <div className="amountAndPrice">
                 <div className="totalProductsAmount">
-                  {totalAmount} products
+                  {items.length} products
                 </div>
                 <div className="totalProductsPrice">
                   <div className="priceWithoutPromo">for {totalPrice} Or</div>
@@ -44,12 +48,8 @@ export const CartMain = () => {
             </div>
           </div>
           <div className="productsArea">
-            {stubProducts.map((item, index) => (
-              <CartProduct
-                key={index}
-                product={item.descript}
-                count={item.count}
-              />
+            {items.map((item, index) => (
+              <CartProduct key={index} product={item} />
             ))}
           </div>
         </>
