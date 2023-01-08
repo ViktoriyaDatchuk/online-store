@@ -2,15 +2,62 @@ import { CartProduct } from "../CartProduct/CartProduct";
 import "./CartMain.css";
 import catImg from "../../assets/img/bg-cat.png";
 import { Modal } from "../Modal/Modal";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
+import { changeDiscount } from "../../redux/cartSlice";
+import classNames from "classnames";
+
+interface discountType {
+  orliner: string;
+  RS: string;
+}
 
 export const CartMain = () => {
-  const { items, totalPrice } = useSelector(
+  const { items, totalPrice, discountPrice, discount } = useSelector(
     (state: RootState) => state.cartSlice
   );
   const [modal, setModal] = useState(false);
+  const [promo, setPromo] = useState<string>("");
+  const [appliedPromo, setAppliedPromo] = useState<string[]>(
+    JSON.parse(localStorage.getItem("appliedPromo")!) || []
+  );
+  let myDiscount: number;
+  const dispatch = useDispatch();
+
+  const discountAll: discountType = {
+    orliner: "20%",
+    RS: "10%",
+  };
+
+  useEffect(() => {
+    if (appliedPromo.length) {
+      const sumDiscount = appliedPromo.reduce(
+        (acc, item) =>
+          (acc += Number(
+            discountAll[item as keyof typeof discountAll].slice(0, 2)
+          )),
+        0
+      );
+      myDiscount = 1 - sumDiscount / 100;
+    } else {
+      myDiscount = 1;
+    }
+    dispatch(changeDiscount(myDiscount));
+    localStorage.setItem("appliedPromo", JSON.stringify(appliedPromo));
+  }, [appliedPromo]);
+
+  const addPromoHandler = () => {
+    setAppliedPromo([...appliedPromo, promo]);
+  };
+
+  const dropPromoHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAppliedPromo(
+      appliedPromo.filter(
+        (item) => item !== (event.target as HTMLButtonElement).id
+      )
+    );
+  };
 
   return (
     <main className="cartMain">
@@ -24,22 +71,68 @@ export const CartMain = () => {
                   {items.length} products
                 </div>
                 <div className="totalProductsPrice">
-                  <div className="priceWithoutPromo">for {totalPrice} Or</div>
-                  <div className="priceWithPromo"></div>
+                  <div
+                    className={classNames("priceWithoutPromo", {
+                      crossOut: appliedPromo.length,
+                    })}
+                  >
+                    for {totalPrice} Or
+                  </div>
+                  {appliedPromo.length ? (
+                    <div className="priceWithPromo">for {discountPrice} Or</div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
               <div className="promoContainer">
-                {/* <div className="addedPromo">
-                  <p>Applied codes</p>
-                </div> */}
+                {appliedPromo.length ? (
+                  <div className="appliedPromo">
+                    <h4 className="promoTitle">Aplied promo</h4>
+                    {appliedPromo.map((promo, index) => (
+                      <div key={index} className="appliedPromoContainer">
+                        <div className="appliedPromoName">
+                          {promo} -{" "}
+                          {discountAll[promo as keyof typeof discountAll]}
+                        </div>
+                        <button
+                          id={promo}
+                          className="promoDrop"
+                          onClick={dropPromoHandler}
+                        >
+                          Drop
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <input
                   type="search"
-                  placeholder="Enter  code"
+                  value={promo}
+                  onChange={(e) => setPromo(e.target.value)}
+                  placeholder="Enter code"
                   className="promoField"
                 ></input>
-                <div className="enteredPromo"></div>
+                {promo && Object.keys(discountAll).includes(promo) ? (
+                  <div className="addPromoContainer">
+                    <div className="enteredPromo">
+                      {promo} - {discountAll[promo as keyof typeof discountAll]}
+                    </div>
+                    {appliedPromo.includes(promo) ? (
+                      <div></div>
+                    ) : (
+                      <button className="promoAdd" onClick={addPromoHandler}>
+                        Add
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <span className="promos">
-                  Promo for test: &apos;orliner&apos;
+                  Promo for test: &apos;orliner&apos;, &apos;RS&apos;
                 </span>
               </div>
               <button className="buyButton" onClick={() => setModal(true)}>

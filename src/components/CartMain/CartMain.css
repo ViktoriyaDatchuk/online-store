@@ -6,6 +6,7 @@
   --main-button-color: #e70;
   --main-title-color: #004d99;
   --main-small-text-color: #999;
+  --main-addButton-color: #7dbf26;
 }
 
 main {
@@ -28,13 +29,14 @@ main {
 
 .totalInfoContainer {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
 .amountAndPrice {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   color: var(--main-small-text-color);
 }
 
@@ -54,6 +56,41 @@ main {
 .promos {
   font-size: 12px;
   color: var(--main-small-text-color);
+}
+
+.promoTitle {
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.appliedPromoContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.addPromoContainer {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.enteredPromo,
+.appliedPromoName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--main-button-color);
+}
+
+.promoAdd,
+.promoDrop {
+  font-size: 12px;
+  padding: 2px 4px;
+  border: none;
+  background-color: var(--main-addButton-color);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .buyButton {
@@ -83,4 +120,8 @@ main {
 .emptyCartText {
   font-size: 20px;
   font-weight: 600;
+}
+
+.crossOut {
+  text-decoration: line-through;
 }

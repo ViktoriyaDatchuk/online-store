@@ -14,6 +14,8 @@ export interface cartProduct {
 }
 
 export interface cartState {
+  discount: number;
+  discountPrice: number;
   totalPrice: number;
   items: cartProduct[];
 }
@@ -21,6 +23,8 @@ export interface cartState {
 const initialState: cartState = JSON.parse(
   localStorage.getItem("cartState")!
 ) || {
+  discount: 1,
+  discountPrice: 0,
   totalPrice: 0,
   items: [],
 };
@@ -33,6 +37,10 @@ const updateTotalPrice = (state: cartState) => {
   state.totalPrice = state.items.reduce((total, product) => {
     return total + product.price * product.count;
   }, 0);
+};
+
+const updateDiscountPrice = (state: cartState) => {
+  state.discountPrice = Math.round(state.totalPrice * state.discount);
 };
 
 const removeFromCart = (
@@ -53,11 +61,13 @@ export const cartSlice = createSlice({
     addProduct: (state, action: PayloadAction<cartProduct>) => {
       state.items.push(action.payload);
       updateTotalPrice(state);
+      updateDiscountPrice(state);
       updateStorage(state);
     },
     removeProduct: (state, action: PayloadAction<cartProduct>) => {
       removeFromCart(state, action);
       updateTotalPrice(state);
+      updateDiscountPrice(state);
       updateStorage(state);
     },
     incrementProductCount: (state, action: PayloadAction<cartProduct>) => {
@@ -66,6 +76,7 @@ export const cartSlice = createSlice({
         founded.count += 1;
       }
       updateTotalPrice(state);
+      updateDiscountPrice(state);
       updateStorage(state);
     },
     decrementProductCount: (state, action: PayloadAction<cartProduct>) => {
@@ -73,15 +84,27 @@ export const cartSlice = createSlice({
       if (founded.count === 1) {
         removeFromCart(state, action);
         localStorage.setItem("cartState", JSON.stringify(state));
+        if (!state.items.length) {
+          state.discount = 1;
+          localStorage.setItem("appliedPromo", JSON.stringify([]));
+        }
       } else {
         founded.count -= 1;
       }
       updateTotalPrice(state);
+      updateDiscountPrice(state);
       updateStorage(state);
     },
     removeAllProducts: (state) => {
       state.items = [];
       updateTotalPrice(state);
+      updateDiscountPrice(state);
+      updateStorage(state);
+    },
+    changeDiscount: (state, action) => {
+      state.discount = action.payload;
+      updateTotalPrice(state);
+      updateDiscountPrice(state);
       updateStorage(state);
     },
   },
@@ -93,6 +116,7 @@ export const {
   incrementProductCount,
   decrementProductCount,
   removeAllProducts,
+  changeDiscount,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

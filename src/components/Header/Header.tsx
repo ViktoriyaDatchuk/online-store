@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 export function Header() {
-  const { items, totalPrice } = useSelector(
+  const { items, discountPrice } = useSelector(
     (state: RootState) => state.cartSlice
   );
 
@@ -16,7 +16,7 @@ export function Header() {
           <img src={LogoImg} alt="orliner" className="logoImg" />
         </Link>
         <div>
-          <span className="totalPrice">Total: {totalPrice} Or</span>
+          <span className="totalPrice">Total: {discountPrice} Or</span>
         </div>
         <Link to="/cart">
           <div className="cart">
