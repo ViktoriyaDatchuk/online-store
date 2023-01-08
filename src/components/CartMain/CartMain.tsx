@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { changeDiscount } from "../../redux/cartSlice";
 import classNames from "classnames";
+import { useSearchParams } from "react-router-dom";
 
 interface discountType {
   orliner: string;
@@ -17,7 +18,8 @@ export const CartMain = () => {
   const { items, totalPrice, discountPrice, discount } = useSelector(
     (state: RootState) => state.cartSlice
   );
-  const [modal, setModal] = useState(false);
+  const [searcParams, setSearchParams] = useSearchParams();
+  const [modal, setModal] = useState(searcParams.get("modal") === "true");
   const [promo, setPromo] = useState<string>("");
   const [appliedPromo, setAppliedPromo] = useState<string[]>(
     JSON.parse(localStorage.getItem("appliedPromo")!) || []
