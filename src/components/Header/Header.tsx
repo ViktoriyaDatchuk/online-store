@@ -16,7 +16,7 @@ export function Header() {
           <img src={LogoImg} alt="orliner" className="logoImg" />
         </Link>
         <div>
-          <span className="totalPrice">Total: {totalPrice}</span>
+          <span className="totalPrice">Total: {totalPrice} Or</span>
         </div>
         <Link to="/cart">
           <div className="cart">

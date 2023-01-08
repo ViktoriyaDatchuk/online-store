@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import "./Modal.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removeAllProducts } from "../../redux/cartSlice";
+import CardImg from "../../assets/img/card.png";
+import MastercardImg from "../../assets/img/mastercard.png";
+import UnionpayImg from "../../assets/img/unionpay.png";
+import VisaImg from "../../assets/img/visa.png";
 
 interface ModalProps {
   onClose: () => void;
@@ -27,6 +34,36 @@ export const Modal = ({ onClose }: ModalProps) => {
   const [cardNumberError, setCardNumberError] = useState("Error! Empty value.");
   const [validError, setValidError] = useState("Error! Empty value.");
   const [cvvError, setCvvError] = useState("Error! Empty value.");
+  const [image, setImage] = useState(CardImg);
+  const [formValid, setFormValid] = useState(false);
+  const [orderProcessed, setOderProcessed] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      nameError ||
+      phoneError ||
+      addressError ||
+      emailError ||
+      cardNumberError ||
+      validError ||
+      cvvError
+    ) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [
+    nameError,
+    phoneError,
+    addressError,
+    emailError,
+    cardNumberError,
+    validError,
+    cvvError,
+  ]);
 
   useEffect(() => {
     setNameError("");
@@ -84,6 +121,20 @@ export const Modal = ({ onClose }: ModalProps) => {
     } else {
       setCardNumberError("");
     }
+    switch (cardNumber[0]) {
+      case "2":
+        setImage(UnionpayImg);
+        break;
+      case "4":
+        setImage(VisaImg);
+        break;
+      case "5":
+        setImage(MastercardImg);
+        break;
+      default:
+        setImage(CardImg);
+        break;
+    }
   }, [cardNumber]);
 
   useEffect(() => {
@@ -136,116 +187,135 @@ export const Modal = ({ onClose }: ModalProps) => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
+    if (formValid) {
+      dispatch(removeAllProducts());
+      setOderProcessed(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } else {
+      setNameDirty(true);
+      setPhoneDirty(true);
+      setAddressDirty(true);
+      setEmailDirty(true);
+      setCardNumberDirty(true);
+      setValidDirty(true);
+      setCvvDirty(true);
+    }
   };
 
   return (
     <>
       <div className="modalArea" onClick={onClose}></div>
       <div className="modalContent">
-        <form className="modalForm" onSubmit={submitHandler}>
-          <h3 className="modalTitle">Personal info</h3>
-          <input
-            onBlur={(e) => blurHandler(e)}
-            onChange={(e) => setName(e.target.value)}
-            name="name"
-            value={name}
-            type="text"
-            placeholder="Name"
-            className="personalInfoInput"
-          ></input>
-          {nameDirty && nameError && (
-            <div className="errorMessage">{nameError}</div>
-          )}
-          <input
-            onBlur={(e) => blurHandler(e)}
-            onChange={(e) => setPhone(e.target.value)}
-            name="phone"
-            value={phone}
-            type="text"
-            placeholder="Phone number"
-            className="personalInfoInput"
-          ></input>
-          {phoneDirty && phoneError && (
-            <div className="errorMessage">{phoneError}</div>
-          )}
-          <input
-            onBlur={(e) => blurHandler(e)}
-            onChange={(e) => setAddress(e.target.value)}
-            name="address"
-            value={address}
-            type="text"
-            placeholder="Delivery address"
-            className="personalInfoInput"
-          ></input>
-          {addressDirty && addressError && (
-            <div className="errorMessage">{addressError}</div>
-          )}
-          <input
-            onBlur={(e) => blurHandler(e)}
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            value={email}
-            type="email"
-            placeholder="E-mail"
-            className="personalInfoInput"
-          ></input>
-          {emailDirty && emailError && (
-            <div className="errorMessage">{emailError}</div>
-          )}
-          <div className="cardDetails">
-            <h4 className="cardDetailsTitle">Cart details</h4>
-            <div className="card">
-              <div className="cardNumber">
-                <div></div>
-                <input
-                  onBlur={(e) => blurHandler(e)}
-                  onChange={(e) => setCardNumber(e.target.value)}
-                  name="cardNumber"
-                  value={cardNumber}
-                  type="text"
-                  placeholder="Card number"
-                  className="cardNumberInput"
-                ></input>
-              </div>
-              <div className="cardInfo">
-                <div className="cardInfoTitle">
-                  VALID:
+        {orderProcessed ? (
+          <div className="orderProcessed">Order is processed</div>
+        ) : (
+          <form className="modalForm" onSubmit={submitHandler}>
+            <h3 className="modalTitle">Personal info</h3>
+            <input
+              onBlur={(e) => blurHandler(e)}
+              onChange={(e) => setName(e.target.value)}
+              name="name"
+              value={name}
+              type="text"
+              placeholder="Name"
+              className="personalInfoInput"
+            ></input>
+            {nameDirty && nameError && (
+              <div className="errorMessage">{nameError}</div>
+            )}
+            <input
+              onBlur={(e) => blurHandler(e)}
+              onChange={(e) => setPhone(e.target.value)}
+              name="phone"
+              value={phone}
+              type="text"
+              placeholder="Phone number"
+              className="personalInfoInput"
+            ></input>
+            {phoneDirty && phoneError && (
+              <div className="errorMessage">{phoneError}</div>
+            )}
+            <input
+              onBlur={(e) => blurHandler(e)}
+              onChange={(e) => setAddress(e.target.value)}
+              name="address"
+              value={address}
+              type="text"
+              placeholder="Delivery address"
+              className="personalInfoInput"
+            ></input>
+            {addressDirty && addressError && (
+              <div className="errorMessage">{addressError}</div>
+            )}
+            <input
+              onBlur={(e) => blurHandler(e)}
+              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={email}
+              type="email"
+              placeholder="E-mail"
+              className="personalInfoInput"
+            ></input>
+            {emailDirty && emailError && (
+              <div className="errorMessage">{emailError}</div>
+            )}
+            <div className="cardDetails">
+              <h4 className="cardDetailsTitle">Cart details</h4>
+              <div className="card">
+                <div className="cardNumber">
+                  <img src={image} alt="cardImage" className="cardImage"></img>
                   <input
                     onBlur={(e) => blurHandler(e)}
-                    onChange={(e) => setValid(e.target.value)}
-                    name="valid"
-                    value={valid}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    name="cardNumber"
+                    value={cardNumber}
                     type="text"
-                    placeholder="Valid"
-                    className="cardInfoInput"
+                    placeholder="Card number"
+                    className="cardNumberInput"
                   ></input>
                 </div>
-                <div className="cardInfoTitle">
-                  CVV:
-                  <input
-                    onBlur={(e) => blurHandler(e)}
-                    onChange={(e) => setCvv(e.target.value)}
-                    name="cvv"
-                    value={cvv}
-                    type="text"
-                    placeholder="CVV"
-                    className="cardInfoInput"
-                  ></input>
+                <div className="cardInfo">
+                  <div className="cardInfoTitle">
+                    VALID:
+                    <input
+                      onBlur={(e) => blurHandler(e)}
+                      onChange={(e) => setValid(e.target.value)}
+                      name="valid"
+                      value={valid}
+                      type="text"
+                      placeholder="Valid"
+                      className="cardInfoInput"
+                    ></input>
+                  </div>
+                  <div className="cardInfoTitle">
+                    CVV:
+                    <input
+                      onBlur={(e) => blurHandler(e)}
+                      onChange={(e) => setCvv(e.target.value)}
+                      name="cvv"
+                      value={cvv}
+                      type="text"
+                      placeholder="CVV"
+                      className="cardInfoInput"
+                    ></input>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {cardNumberDirty && cardNumberError && (
-            <div className="errorMessage">{`Card number - ${cardNumberError}`}</div>
-          )}
-          {validDirty && validError && (
-            <div className="errorMessage">{`Valid - ${validError}`}</div>
-          )}
-          {cvvDirty && cvvError && (
-            <div className="errorMessage">{`CVV - ${cvvError}`}</div>
-          )}
-          <button className="modalButton">Confirm</button>
-        </form>
+            {cardNumberDirty && cardNumberError && (
+              <div className="errorMessage">{`Card number - ${cardNumberError}`}</div>
+            )}
+            {validDirty && validError && (
+              <div className="errorMessage">{`Valid - ${validError}`}</div>
+            )}
+            {cvvDirty && cvvError && (
+              <div className="errorMessage">{`CVV - ${cvvError}`}</div>
+            )}
+            <button className="modalButton">Confirm</button>
+          </form>
+        )}
       </div>
     </>
   );

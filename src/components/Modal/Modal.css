@@ -77,7 +77,20 @@
   gap: 15px;
 }
 
-.cardNumberInput {
+.cardNumber {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.cardImage {
+  width: 41px;
+  height: 32px;
+}
+
+.cardNumber .cardNumberInput {
+  margin-top: 0;
   padding: 0 5px;
 }
 
@@ -111,5 +124,12 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--main-error-color);
+  text-align: center;
+}
+
+.orderProcessed {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 20px auto;
   text-align: center;
 }
