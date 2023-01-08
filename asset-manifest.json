@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.2d7d4004.css",
-    "main.js": "/static/js/main.ac1bb819.js",
-    "static/media/mastercard.png": "/static/media/mastercard.5de1b2d5ca9ff06cc61f.png",
-    "static/media/bg-cat.png": "/static/media/bg-cat.1193c1b9084616e93c02.png",
-    "static/media/unionpay.png": "/static/media/unionpay.03d3e15e4dec487b1c66.png",
-    "static/media/card.png": "/static/media/card.0fa83be7bf439ac857d6.png",
-    "static/media/orliner-logo.png": "/static/media/orliner-logo.c09e525e2ed01a0dc1a0.png",
-    "static/media/rs_school_js_white.svg": "/static/media/rs_school_js_white.5183328ce6fe891c8078973023fc2410.svg",
-    "static/media/cart.svg": "/static/media/cart.c5efe51bdeea58a186e7.svg",
-    "static/media/github.svg": "/static/media/github.26b8cb557a2b7313a5de37a032df7522.svg",
-    "index.html": "/index.html",
-    "main.2d7d4004.css.map": "/static/css/main.2d7d4004.css.map",
-    "main.ac1bb819.js.map": "/static/js/main.ac1bb819.js.map"
+    "main.css": "/online-store/static/css/main.0063ac28.css",
+    "main.js": "/online-store/static/js/main.fb7db866.js",
+    "static/media/mastercard.png": "/online-store/static/media/mastercard.5de1b2d5ca9ff06cc61f.png",
+    "static/media/bg-cat.png": "/online-store/static/media/bg-cat.1193c1b9084616e93c02.png",
+    "static/media/unionpay.png": "/online-store/static/media/unionpay.03d3e15e4dec487b1c66.png",
+    "static/media/card.png": "/online-store/static/media/card.0fa83be7bf439ac857d6.png",
+    "static/media/orliner-logo.png": "/online-store/static/media/orliner-logo.c09e525e2ed01a0dc1a0.png",
+    "static/media/rs_school_js_white.svg": "/online-store/static/media/rs_school_js_white.5183328ce6fe891c8078973023fc2410.svg",
+    "static/media/cart.svg": "/online-store/static/media/cart.c5efe51bdeea58a186e7.svg",
+    "static/media/github.svg": "/online-store/static/media/github.26b8cb557a2b7313a5de37a032df7522.svg",
+    "index.html": "/online-store/index.html",
+    "main.0063ac28.css.map": "/online-store/static/css/main.0063ac28.css.map",
+    "main.fb7db866.js.map": "/online-store/static/js/main.fb7db866.js.map"
   },
   "entrypoints": [
-    "static/css/main.2d7d4004.css",
-    "static/js/main.ac1bb819.js"
+    "static/css/main.0063ac28.css",
+    "static/js/main.fb7db866.js"
   ]
 }
