@@ -79,6 +79,11 @@ export const cartSlice = createSlice({
       updateTotalPrice(state);
       updateStorage(state);
     },
+    removeAllProducts: (state) => {
+      state.items = [];
+      updateTotalPrice(state);
+      updateStorage(state);
+    },
   },
 });
 
@@ -87,6 +92,7 @@ export const {
   removeProduct,
   incrementProductCount,
   decrementProductCount,
+  removeAllProducts,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
