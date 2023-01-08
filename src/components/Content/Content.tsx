@@ -1,6 +1,6 @@
 import ProductResponse from "../../interfaces/ProductResponse";
 import "../Content/Content.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import MultiRangeSlider, { ChangeResult } from "multi-range-slider-react";
 import { Filters } from "../Filters/Filters";
 import { Product } from "../product/Product";
@@ -37,6 +37,7 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
   );
   const [value, setValue] = useState("");
   const [isList, setIsList] = useState(true);
+  const [selectedSort, setSelectedSort] = useState("");
 
   const addFilter = (name: string, value: string) => {
     if (name === "categories") {
@@ -76,12 +77,12 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
             return true;
           }
         })
-      .filter((item) => {
-        return item.price >= minValuePrice && item.price <= maxValuePrice;
-      })
-      .filter((item) => {
-        return item.stock >= minValueStock && item.stock <= maxValueStock;
-      })
+        .filter((item) => {
+          return item.price >= minValuePrice && item.price <= maxValuePrice;
+        })
+        .filter((item) => {
+          return item.stock >= minValueStock && item.stock <= maxValueStock;
+        })
     );
   };
 
@@ -113,6 +114,28 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
         products.map((item) => item.stock)
       )
     );
+  };
+
+  const sortProductFunction = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSort(event.target.value);
+    const [name, direction] = event.target.value.split(" ");
+    if (direction === "desc") {
+      setsortProducts(
+        products.sort(
+          (a, b) =>
+            (b[name as keyof ProductResponse] as number) -
+            (a[name as keyof ProductResponse] as number)
+        )
+      );
+    } else {
+      setsortProducts(
+        products.sort(
+          (a, b) =>
+            (a[name as keyof ProductResponse] as number) -
+            (b[name as keyof ProductResponse] as number)
+        )
+      );
+    }
   };
 
   return (
@@ -148,8 +171,8 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
                 filterFunction();
               }}
             ></MultiRangeSlider>
-          </div> 
-            <div className="sliderContainer">
+          </div>
+          <div className="sliderContainer">
             <h4 className="sliderTitle">Stock</h4>
             <MultiRangeSlider
               min={Math.min.apply(
@@ -168,12 +191,26 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
               onInput={(e: ChangeResult) => {
                 setMinValueStock(e.minValue);
                 setMaxValueStock(e.maxValue);
-                filterFunction();              }}
+                filterFunction();
+              }}
             ></MultiRangeSlider>
           </div>
-          <div className="total">{sortProducts.length} products found</div>
+          <div className="total">
+            {
+              sortProducts.filter((product) => {
+                return (
+                  product.title.toLowerCase().includes(value.toLowerCase()) ||
+                  product.category.toLowerCase().includes(value.toLowerCase())
+                );
+              }).length
+            }{" "}
+            products found
+          </div>
           <button className="resetFilters" onClick={resetFilters}>
             Reset Filters
+          </button>
+          <button className="copyLink" onClick={resetFilters}>
+            Copy Link
           </button>
         </div>
         <div className="products">
@@ -184,12 +221,29 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
               className="products__search-field"
               placeholder="Search product"
             />
-            <button
-              className="controls__view-button"
-              onClick={() => setIsList(!isList)}
-            >
-              <img src={isList ? cardImg : listImg} alt="view" />
-            </button>
+            <div className="sortViewContainer">
+              <div className="sort">
+                <select
+                  className="sortSelect"
+                  value={selectedSort}
+                  onChange={sortProductFunction}
+                >
+                  <option disabled value="">
+                    Sort:
+                  </option>
+                  <option value="rating desc">Popular first</option>
+                  <option value="rating asc">Unpopular first</option>
+                  <option value="price desc">Expensive first</option>
+                  <option value="price asc">Cheap first</option>
+                </select>
+              </div>
+              <button
+                className="controls__view-button"
+                onClick={() => setIsList(!isList)}
+              >
+                <img src={isList ? cardImg : listImg} alt="view" />
+              </button>
+            </div>
           </div>
           {sortProducts.length ? (
             sortProducts

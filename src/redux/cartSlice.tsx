@@ -97,6 +97,7 @@ export const cartSlice = createSlice({
     },
     removeAllProducts: (state) => {
       state.items = [];
+      state.discount = 1;
       updateTotalPrice(state);
       updateDiscountPrice(state);
       updateStorage(state);
