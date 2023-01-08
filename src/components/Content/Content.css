@@ -1,6 +1,7 @@
 * {
   --main-total-color: rgba(220, 220, 220, 0.521);
   --main-button-color: #e70;
+  --main-copyLink-color: #7dbf26;
 }
 
 main {
@@ -31,7 +32,6 @@ main {
   width: 100%;
   padding: 10px;
   height: 80px;
-  justify-content: flex-start;
   align-items: center;
   border: 1px solid var(--main-border-color);
   justify-content: space-between;
@@ -52,6 +52,23 @@ main {
   outline: none;
 }
 
+.sortViewContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.sortSelect {
+  width: 120px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--main-border-color);
+}
+
+.sortSelect:focus {
+  outline: none;
+}
+
 .controls__view-button {
   width: 40px;
   height: 40px;
@@ -68,7 +85,7 @@ main {
   width: 30px;
   height: 30px;
   -webkit-filter: invert(100%);
-          filter: invert(100%);
+  filter: invert(100%);
 }
 
 .notFound {
@@ -86,7 +103,8 @@ main {
   font-size: 14px;
 }
 
-.resetFilters {
+.resetFilters,
+.copyLink {
   width: 100%;
   margin-top: 15px;
   padding: 5px 10px;
@@ -96,6 +114,10 @@ main {
   font-size: 15px;
   color: white;
   cursor: pointer;
+}
+
+.copyLink:active {
+  background-color: var(--main-copyLink-color);
 }
 
 .sliderContainer {

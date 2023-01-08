@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Modal.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { changeDiscount, removeAllProducts } from "../../redux/cartSlice";
+import { removeAllProducts } from "../../redux/cartSlice";
 import CardImg from "../../assets/img/card.png";
 import MastercardImg from "../../assets/img/mastercard.png";
 import UnionpayImg from "../../assets/img/unionpay.png";
@@ -190,7 +190,6 @@ export const Modal = ({ onClose }: ModalProps) => {
     if (formValid) {
       dispatch(removeAllProducts());
       localStorage.setItem("appliedPromo", JSON.stringify([]));
-      dispatch(changeDiscount(1));
       setOderProcessed(true);
       setTimeout(() => {
         navigate("/");
