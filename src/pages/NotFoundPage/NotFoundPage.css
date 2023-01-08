@@ -1,0 +1,22 @@
+.not-found__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.not-found__img {
+  display: block;
+  height: 600px;
+  flex: 1 1 auto;
+  margin: 0 auto auto;
+}
+
+.not-found__text {
+  font-size: 36px;
+  font-weight: 700;
+  width: fit-content;
+  margin: 100px auto 0;
+  color: #3e4753;
+}
