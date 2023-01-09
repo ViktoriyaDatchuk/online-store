@@ -1,3 +1,7 @@
+main {
+  flex: 1 1 auto;
+}
+
 .not-found__container {
   display: flex;
   flex-direction: column;
@@ -8,15 +12,17 @@
 
 .not-found__img {
   display: block;
-  height: 600px;
+  height: 500px;
   flex: 1 1 auto;
   margin: 0 auto auto;
 }
 
 .not-found__text {
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 700;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
-  margin: 100px auto 0;
+  margin: 70px auto 0;
   color: #3e4753;
 }

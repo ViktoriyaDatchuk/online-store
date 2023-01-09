@@ -90,6 +90,7 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
 
   const resetFilters = () => {
     setsortProducts(products);
+    setSearchParams({});
     setFiltersBrand([]);
     setFiltersCategory([]);
     setMinValuePrice(
@@ -242,12 +243,12 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
               <button
                 className="controls__view-button"
                 onClick={() => {
-                setIsList(!isList);
-                setSearchParams({ view: isList ? "block" : "list" });
-              }}
-            >
-              <img src={isList ? cardImg : listImg} alt="view" />
-            </button>
+                  setIsList(!isList);
+                  setSearchParams({ view: isList ? "block" : "list" });
+                }}
+              >
+                <img src={isList ? cardImg : listImg} alt="view" />
+              </button>
             </div>
           </div>
           {sortProducts.length ? (
