@@ -19,10 +19,12 @@ export const Filters = ({
 }: FiltersProps) => {
   const categories = new Set<string>();
   const brands = new Set<string>();
-  products.map((product) => {
-    categories.add(product.category);
-    brands.add(product.brand);
-  });
+  [...products]
+    .sort((a, b) => a.id - b.id)
+    .map((product) => {
+      categories.add(product.category);
+      brands.add(product.brand);
+    });
 
   return (
     <div className="filtersContainer">

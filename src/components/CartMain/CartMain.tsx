@@ -15,7 +15,7 @@ interface discountType {
 }
 
 export const CartMain = () => {
-  const { items, totalPrice, discountPrice, discount } = useSelector(
+  const { items, totalPrice, discountPrice } = useSelector(
     (state: RootState) => state.cartSlice
   );
   const [searcParams, setSearchParams] = useSearchParams();
