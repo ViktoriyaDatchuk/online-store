@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ProductResponse from "../../interfaces/ProductResponse";
@@ -6,12 +6,15 @@ import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
 import { Images } from "../../components/Images/Images";
 import { AddBtn } from "../../components/AddBtn/AddBtn";
+import { addProduct } from "../../redux/cartSlice";
 import "./ProductPage.css";
+import { useDispatch } from "react-redux";
 
 export function ProductPage() {
   const [product, setProduct] = useState({} as ProductResponse);
 
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getProduct();
@@ -26,6 +29,22 @@ export function ProductPage() {
     }
   }
 
+  const item = {
+    description: product.description,
+    discountPercentage: product.discountPercentage,
+    id: product.id,
+    price: product.price,
+    rating: product.rating,
+    stock: product.stock,
+    thumbnail: product.thumbnail,
+    title: product.title,
+    count: 1,
+  };
+
+  const addToCart = () => {
+    dispatch(addProduct(item));
+  };
+
   return (
     <div className="main-container">
       <Header />
@@ -33,9 +52,9 @@ export function ProductPage() {
         <div className="description__title">
           <h1 className="">{product.title} in catalog Orliner</h1>
           <AddBtn product={product} />
-          <a href="#" className="add">
+          <Link to="/cart?modal=true" className="add" onClick={addToCart}>
             Buy now
-          </a>
+          </Link>
         </div>
         <p className="product-path">
           STORE &gt; {product.category} &gt; {product.brand} &gt;{" "}

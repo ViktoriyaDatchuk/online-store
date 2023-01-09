@@ -1,4 +1,5 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Checkbox.css";
 
 interface CheckboxProps {
@@ -16,11 +17,34 @@ export function Checkbox({
   removeFilter,
   filtersArray,
 }: CheckboxProps) {
+  const [searcParams, setSearchParams] = useSearchParams();
+  const [isChecked, setIschecked] = useState(
+    searcParams.get(name)?.includes(category)
+  );
+  const params = name === "categories" ? "brands" : "categories";
+  const addParams = searcParams.get(params) || "";
+
+  useEffect(() => {
+    if (isChecked) {
+      addFilter(name, category);
+    }
+  }, []);
+
   const checkboxClickHandler = (event: FormEvent<HTMLInputElement>) => {
+    setIschecked(!isChecked);
     if (event.currentTarget.checked) {
       addFilter(event.currentTarget.name, event.currentTarget.value);
+      setSearchParams({
+        [params]: addParams,
+        [name]: (searcParams.get(name) || "") + ";" + category,
+      });
+      console.log(searcParams);
     } else {
       removeFilter(event.currentTarget.name, event.currentTarget.value);
+      setSearchParams({
+        [params]: addParams,
+        [name]: (searcParams.get(name) || "").replace(";" + category, ""),
+      });
     }
   };
 
@@ -32,7 +56,7 @@ export function Checkbox({
         id={category}
         name={name}
         value={category}
-        checked={filtersArray.includes(category)}
+        checked={filtersArray.includes(category) || isChecked}
         onChange={checkboxClickHandler}
       />
       {category}

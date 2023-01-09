@@ -6,8 +6,10 @@ import { Filters } from "../Filters/Filters";
 import { Product } from "../product/Product";
 import listImg from "../../assets/img/listview.png";
 import cardImg from "../../assets/img/tileview.png";
+import { useSearchParams } from "react-router-dom";
 
 export const Content = ({ products }: { products: ProductResponse[] }) => {
+  const [searcParams, setSearchParams] = useSearchParams();
   const [filtersCategory, setFiltersCategory] = useState<string[]>([]);
   const [filtersBrand, setFiltersBrand] = useState<string[]>([]);
   const [sortProducts, setsortProducts] = useState<ProductResponse[]>(products);
@@ -36,7 +38,7 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
     )
   );
   const [value, setValue] = useState("");
-  const [isList, setIsList] = useState(true);
+  const [isList, setIsList] = useState(searcParams.get("view") === "list");
   const [selectedSort, setSelectedSort] = useState("");
 
   const addFilter = (name: string, value: string) => {
@@ -239,10 +241,13 @@ export const Content = ({ products }: { products: ProductResponse[] }) => {
               </div>
               <button
                 className="controls__view-button"
-                onClick={() => setIsList(!isList)}
-              >
-                <img src={isList ? cardImg : listImg} alt="view" />
-              </button>
+                onClick={() => {
+                setIsList(!isList);
+                setSearchParams({ view: isList ? "block" : "list" });
+              }}
+            >
+              <img src={isList ? cardImg : listImg} alt="view" />
+            </button>
             </div>
           </div>
           {sortProducts.length ? (
