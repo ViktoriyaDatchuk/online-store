@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Modal.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { removeAllProducts } from "../../redux/cartSlice";
+import { changePage, removeAllProducts } from "../../redux/cartSlice";
 import CardImg from "../../assets/img/card.png";
 import MastercardImg from "../../assets/img/mastercard.png";
 import UnionpayImg from "../../assets/img/unionpay.png";

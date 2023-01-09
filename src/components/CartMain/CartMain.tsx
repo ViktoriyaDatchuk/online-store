@@ -2,10 +2,14 @@ import { CartProduct } from "../CartProduct/CartProduct";
 import "./CartMain.css";
 import catImg from "../../assets/img/bg-cat.png";
 import { Modal } from "../Modal/Modal";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { changeDiscount } from "../../redux/cartSlice";
+import {
+  changeDiscount,
+  changePage,
+  changePerPage,
+} from "../../redux/cartSlice";
 import classNames from "classnames";
 import { useSearchParams } from "react-router-dom";
 
@@ -15,15 +19,15 @@ interface discountType {
 }
 
 export const CartMain = () => {
-  const { items, totalPrice, discountPrice } = useSelector(
-    (state: RootState) => state.cartSlice
-  );
+  const { items, totalPrice, discountPrice, currentPage, perPage } =
+    useSelector((state: RootState) => state.cartSlice);
   const [searcParams, setSearchParams] = useSearchParams();
   const [modal, setModal] = useState(searcParams.get("modal") === "true");
   const [promo, setPromo] = useState<string>("");
   const [appliedPromo, setAppliedPromo] = useState<string[]>(
     JSON.parse(localStorage.getItem("appliedPromo")!) || []
   );
+  const [pagesValue, setPagesValue] = useState(items.length);
   let myDiscount: number;
   const dispatch = useDispatch();
 
@@ -31,6 +35,21 @@ export const CartMain = () => {
     orliner: "20%",
     RS: "10%",
   };
+
+  let pageCount = Math.ceil(items.length / perPage);
+  let pages: number[] = [];
+  for (let i = 0; i < pageCount; i += 1) {
+    pages.push(i + 1);
+  }
+
+  useEffect(() => {
+    dispatch(changePerPage(1));
+    dispatch(changePage(1));
+  }, []);
+
+  useEffect(() => {
+    if (currentPage > pages.length) [dispatch(changePage(pages.length))];
+  }, [pages]);
 
   useEffect(() => {
     if (appliedPromo.length) {
@@ -59,6 +78,16 @@ export const CartMain = () => {
         (item) => item !== (event.target as HTMLButtonElement).id
       )
     );
+  };
+
+  const perPagesHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setPagesValue(Number(event.target.value));
+    dispatch(changePerPage(Number(event.target.value)));
+    pageCount = Math.ceil(items.length / perPage);
+    pages = [];
+    for (let i = 0; i < pageCount; i += 1) {
+      pages.push(i + 1);
+    }
   };
 
   return (
@@ -143,9 +172,37 @@ export const CartMain = () => {
             </div>
           </div>
           <div className="productsArea">
-            {items.map((item, index) => (
-              <CartProduct key={index} product={item} />
-            ))}
+            {[...items]
+              .filter((item, index) => {
+                return index < currentPage * perPage;
+              })
+              .filter((item, index) => {
+                return index >= perPage * (currentPage - 1);
+              })
+              .map((item, index) => (
+                <CartProduct key={index} product={item} />
+              ))}
+          </div>
+          <div className="pagination">
+            <div className="pages">
+              {pages.map((page, index) => (
+                <span
+                  key={index}
+                  className={currentPage === page ? "currentPage" : "page"}
+                  onClick={() => dispatch(changePage(page))}
+                >
+                  {page}
+                </span>
+              ))}
+            </div>
+            <input
+              type="number"
+              value={pagesValue}
+              className="pagesInput"
+              min={1}
+              max={items.length}
+              onChange={perPagesHandler}
+            ></input>
           </div>
         </>
       ) : (

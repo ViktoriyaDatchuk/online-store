@@ -124,3 +124,38 @@ main {
 .crossOut {
   text-decoration: line-through;
 }
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.page,
+.currentPage {
+  border: 1px solid var(--main-small-text-color);
+  border-radius: 100%;
+  padding: 5px 12px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.currentPage {
+  border: 2px solid var(--main-small-text-color);
+  font-weight: 600;
+}
+
+.pagesInput {
+  border: 1px solid var(--main-border-color);
+  border-radius: 3px;
+  height: 35px;
+  width: 50px;
+  padding: 0 5px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.pagesInput:focus {
+  outline: none;
+}

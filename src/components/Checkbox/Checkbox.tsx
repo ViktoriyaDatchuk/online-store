@@ -38,7 +38,6 @@ export function Checkbox({
         [params]: addParams,
         [name]: (searcParams.get(name) || "") + ";" + category,
       });
-      console.log(searcParams);
     } else {
       removeFilter(event.currentTarget.name, event.currentTarget.value);
       setSearchParams({
@@ -56,7 +55,7 @@ export function Checkbox({
         id={category}
         name={name}
         value={category}
-        checked={filtersArray.includes(category) || isChecked}
+        checked={filtersArray.includes(category)}
         onChange={checkboxClickHandler}
       />
       {category}

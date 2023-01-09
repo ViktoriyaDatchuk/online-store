@@ -17,6 +17,8 @@ export interface cartState {
   discount: number;
   discountPrice: number;
   totalPrice: number;
+  currentPage: number;
+  perPage: number;
   items: cartProduct[];
 }
 
@@ -26,6 +28,8 @@ const initialState: cartState = JSON.parse(
   discount: 1,
   discountPrice: 0,
   totalPrice: 0,
+  currentPage: 1,
+  perPage: 3,
   items: [],
 };
 
@@ -108,6 +112,14 @@ export const cartSlice = createSlice({
       updateDiscountPrice(state);
       updateStorage(state);
     },
+    changePage: (state, action) => {
+      state.currentPage = action.payload;
+      updateStorage(state);
+    },
+    changePerPage: (state, action) => {
+      state.perPage = action.payload;
+      updateStorage(state);
+    },
   },
 });
 
@@ -118,6 +130,8 @@ export const {
   decrementProductCount,
   removeAllProducts,
   changeDiscount,
+  changePage,
+  changePerPage,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
