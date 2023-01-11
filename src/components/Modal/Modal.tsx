@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Modal.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { changePage, removeAllProducts } from "../../redux/cartSlice";
+import { removeAllProducts } from "../../redux/cartSlice";
 import CardImg from "../../assets/img/card.png";
 import MastercardImg from "../../assets/img/mastercard.png";
 import UnionpayImg from "../../assets/img/unionpay.png";
@@ -116,7 +116,7 @@ export const Modal = ({ onClose }: ModalProps) => {
   }, [email]);
 
   useEffect(() => {
-    if (cardNumber.length !== 16 || /\D/.test(cardNumber)) {
+    if (cardNumber.length !== 16) {
       setCardNumberError("Error! Incorrect card number!");
     } else {
       setCardNumberError("");
@@ -138,21 +138,15 @@ export const Modal = ({ onClose }: ModalProps) => {
   }, [cardNumber]);
 
   useEffect(() => {
-    if (valid[2] === "/" && Number(valid.slice(0, 2)) < 12) {
-      setValidError("");
-    } else if (
-      valid.length !== 4 ||
-      /\D/.test(valid) ||
-      Number(valid.slice(0, 2)) > 12
-    ) {
+    if (valid.length < 5 || Number(valid.slice(0, 2)) > 12) {
       setValidError("Error! Incorrect value!");
-    } else {
-      setValid(valid.slice(0, 2) + "/" + valid.slice(2));
+    } else if (valid[2] === "/" && Number(valid.slice(0, 2)) <= 12) {
+      setValidError("");
     }
   }, [valid]);
 
   useEffect(() => {
-    if (cvv.length !== 3 || /\D/.test(cvv)) {
+    if (cvv.length !== 3) {
       setCvvError("Error! Incorrect cvv");
     } else {
       setCvvError("");
@@ -269,11 +263,14 @@ export const Modal = ({ onClose }: ModalProps) => {
                   <img src={image} alt="cardImage" className="cardImage"></img>
                   <input
                     onBlur={(e) => blurHandler(e)}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    onChange={(e) =>
+                      setCardNumber(e.target.value.replace(/\D+/g, ""))
+                    }
                     name="cardNumber"
                     value={cardNumber}
                     type="text"
                     placeholder="Card number"
+                    maxLength={16}
                     className="cardNumberInput"
                   ></input>
                 </div>
@@ -282,11 +279,19 @@ export const Modal = ({ onClose }: ModalProps) => {
                     VALID:
                     <input
                       onBlur={(e) => blurHandler(e)}
-                      onChange={(e) => setValid(e.target.value)}
+                      onChange={(e) =>
+                        setValid(
+                          e.target.value
+                            .replace(/\D+/g, "")
+                            .replace(/(\d{2})(\d+)/, "$1/$2")
+                        )
+                      }
                       name="valid"
                       value={valid}
                       type="text"
                       placeholder="Valid"
+                      maxLength={5}
+                      pattern="\d{4}"
                       className="cardInfoInput"
                     ></input>
                   </div>
@@ -294,11 +299,14 @@ export const Modal = ({ onClose }: ModalProps) => {
                     CVV:
                     <input
                       onBlur={(e) => blurHandler(e)}
-                      onChange={(e) => setCvv(e.target.value)}
+                      onChange={(e) =>
+                        setCvv(e.target.value.replace(/\D+/g, ""))
+                      }
                       name="cvv"
                       value={cvv}
                       type="text"
                       placeholder="CVV"
+                      maxLength={3}
                       className="cardInfoInput"
                     ></input>
                   </div>

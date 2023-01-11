@@ -8,9 +8,11 @@ import {
 import "./CartProduct.css";
 
 export const CartProduct = ({
+  number,
   product,
 }: {
   key: number;
+  number: number;
   product: cartProduct;
 }) => {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export const CartProduct = ({
   };
   return (
     <div className="productContainer">
+      <span className="productNumber">{number + 1}</span>
       <div className="productImgContainer">
         <img src={product.thumbnail} alt="product" className="productImg" />
       </div>
