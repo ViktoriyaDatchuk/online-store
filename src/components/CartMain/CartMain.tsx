@@ -27,7 +27,7 @@ export const CartMain = () => {
   const [appliedPromo, setAppliedPromo] = useState<string[]>(
     JSON.parse(localStorage.getItem("appliedPromo")!) || []
   );
-  const [pagesValue, setPagesValue] = useState(items.length);
+  const [pagesValue, setPagesValue] = useState(1);
   let myDiscount: number;
   const dispatch = useDispatch();
 
@@ -180,7 +180,11 @@ export const CartMain = () => {
                 return index >= perPage * (currentPage - 1);
               })
               .map((item, index) => (
-                <CartProduct key={index} product={item} />
+                <CartProduct
+                  key={index}
+                  number={index + perPage * (currentPage - 1)}
+                  product={item}
+                />
               ))}
           </div>
           <div className="pagination">

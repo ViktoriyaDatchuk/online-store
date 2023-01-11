@@ -59,7 +59,7 @@ main {
 }
 
 .sortSelect {
-  width: 120px;
+  width: 130px;
   height: 30px;
   padding: 0 10px;
   border: 1px solid var(--main-border-color);
