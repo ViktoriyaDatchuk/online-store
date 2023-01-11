@@ -291,7 +291,6 @@ export const Modal = ({ onClose }: ModalProps) => {
                       type="text"
                       placeholder="Valid"
                       maxLength={5}
-                      pattern="\d{4}"
                       className="cardInfoInput"
                     ></input>
                   </div>
