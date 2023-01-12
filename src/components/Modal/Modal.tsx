@@ -138,7 +138,11 @@ export const Modal = ({ onClose }: ModalProps) => {
   }, [cardNumber]);
 
   useEffect(() => {
-    if (valid.length < 5 || Number(valid.slice(0, 2)) > 12) {
+    if (
+      valid.length < 5 ||
+      Number(valid.slice(0, 2)) > 12 ||
+      Number(valid.slice(0, 2)) < 1
+    ) {
       setValidError("Error! Incorrect value!");
     } else if (valid[2] === "/" && Number(valid.slice(0, 2)) <= 12) {
       setValidError("");
