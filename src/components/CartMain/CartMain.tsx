@@ -28,6 +28,8 @@ export const CartMain = () => {
     JSON.parse(localStorage.getItem("appliedPromo")!) || []
   );
   const [pagesValue, setPagesValue] = useState(1);
+
+  const total = items.reduce((acc, item) => acc + item.count, 0);
   let myDiscount: number;
   const dispatch = useDispatch();
 
@@ -98,9 +100,7 @@ export const CartMain = () => {
             <h2>Cart</h2>
             <div className="totalInfoContainer">
               <div className="amountAndPrice">
-                <div className="totalProductsAmount">
-                  {items.length} products
-                </div>
+                <div className="totalProductsAmount">{total} products</div>
                 <div className="totalProductsPrice">
                   <div
                     className={classNames("priceWithoutPromo", {
