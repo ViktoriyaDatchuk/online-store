@@ -8,6 +8,7 @@ export function Header() {
   const { items, discountPrice } = useSelector(
     (state: RootState) => state.cartSlice
   );
+  const total = items.reduce((acc, item) => acc + item.count, 0);
 
   return (
     <header>
@@ -20,7 +21,7 @@ export function Header() {
         </div>
         <Link to="/cart">
           <div className="cart">
-            <div className="cartCounter">{items.length}</div>
+            <div className="cartCounter">{total}</div>
           </div>
         </Link>
       </div>
