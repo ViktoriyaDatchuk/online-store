@@ -5,10 +5,10 @@ import "./Cart.css";
 
 export const Cart = () => {
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="cart-page">
       <Header />
       <CartMain />
       <Footer />
     </div>
   );
-}
+};
