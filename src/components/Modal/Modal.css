@@ -1,0 +1,134 @@
+* {
+  padding: 0;
+  margin: 0;
+  --main-border-color: gainsboro;
+  --main-button-color: #e70;
+  --main-title-color: #004d99;
+  --main-small-text-color: #999;
+  --main-background-color: #e3e3e3;
+  --main-card-color: #7dbf26;
+  --main-error-color: rgb(242, 51, 51);
+}
+
+.modalArea {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.5s;
+}
+
+.modalContent {
+  width: 40%;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--main-background-color);
+  border-radius: 5px;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalTitle {
+  text-align: center;
+}
+
+.modalContent input {
+  border: 1px solid var(--main-border-color);
+  border-radius: 3px;
+  height: 30px;
+  font-size: 14px;
+  transition: 0.3s;
+  margin-top: 15px;
+}
+
+.modalContent input:focus {
+  outline: none;
+}
+
+.personalInfoInput {
+  padding: 0 20px;
+}
+
+.cardDetails {
+  width: 60%;
+  margin: 15px auto 0;
+  padding: 5px 10px 10px;
+  background-color: var(--main-card-color);
+  border-radius: 5px;
+}
+
+.cardDetailsTitle {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cardNumber {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.cardImage {
+  width: 41px;
+  height: 32px;
+}
+
+.cardNumber .cardNumberInput {
+  margin-top: 0;
+  padding: 0 5px;
+}
+
+.cardInfo {
+  display: flex;
+}
+
+.cardInfoTitle {
+  font-size: 14px;
+}
+
+.cardInfoInput {
+  width: 40%;
+  padding: 0 5px;
+  margin-left: 5px;
+}
+
+.modalButton {
+  width: 150px;
+  height: 30px;
+  border: none;
+  margin: 25px auto 10px;
+  background-color: var(--main-button-color);
+  border-radius: 5px;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.errorMessage {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--main-error-color);
+  text-align: center;
+}
+
+.orderProcessed {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 20px auto;
+  text-align: center;
+}

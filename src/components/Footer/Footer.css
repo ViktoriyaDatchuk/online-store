@@ -1,0 +1,47 @@
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: #3e4753;
+}
+
+.footerInfo {
+  font-size: 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #6b737f;
+}
+
+.footerList {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  align-items: center;
+  gap: 20px;
+}
+
+.iconGithub,
+.iconGithub2 {
+  width: 31px;
+  height: 31px;
+}
+
+.iconGithub2 {
+  -webkit-filter: brightness(0) saturate(100%);
+          filter: brightness(0) saturate(100%);
+}
+
+.iconRsschool {
+  width: 50px;
+  height: 40px;
+}
+
+.iconGithub:hover,
+.iconGithub2:hover,
+.iconRsschool:hover {
+  -webkit-filter: brightness(0) saturate(100%) invert(78%) sepia(77%)
+    saturate(469%) hue-rotate(353deg) brightness(101%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(78%) sepia(77%) saturate(469%)
+    hue-rotate(353deg) brightness(101%) contrast(105%);
+}

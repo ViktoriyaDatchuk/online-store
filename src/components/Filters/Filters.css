@@ -1,0 +1,38 @@
+* {
+  --main-scroll-track-color: gainsboro;
+  --main-scroll-thumb: #e70;
+}
+
+.filterTitle {
+  margin: 3px 0;
+}
+
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filterItem {
+  max-height: 160px;
+  overflow-x: hidden;
+}
+
+.filterItem::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+}
+
+.filterItem::-webkit-scrollbar-track-piece {
+  background-color: var(--main-scroll-track-color);
+}
+
+.filterItem::-webkit-scrollbar-thumb:vertical {
+  height: 10px;
+  background-color: var(--main-scroll-thumb);
+}
+
+.filterItem::-webkit-scrollbar-thumb:horizontal {
+  width: 7px;
+  background-color: var(--main-scroll-thumb);
+}
