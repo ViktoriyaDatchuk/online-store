@@ -171,7 +171,7 @@ export const CartMain = () => {
               </button>
             </div>
           </div>
-          <div className="productsArea">
+          <div className="productsArea" data-testid="cart-products">
             {[...items]
               .filter((item, index) => {
                 return index < currentPage * perPage;

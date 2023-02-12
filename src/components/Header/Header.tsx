@@ -13,13 +13,13 @@ export function Header() {
   return (
     <header>
       <div className="container">
-        <Link to="/">
+        <Link to="/" data-testid="main-link">
           <img src={LogoImg} alt="orliner" className="logoImg" />
         </Link>
         <div>
           <span className="totalPrice">Total: {discountPrice} Or</span>
         </div>
-        <Link to="/cart">
+        <Link to="/cart" data-testid="cart-link">
           <div className="cart">
             <div className="cartCounter">{total}</div>
           </div>

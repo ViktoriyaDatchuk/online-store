@@ -22,7 +22,7 @@ export function Main() {
   }
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="main-page">
       <Header />
       <Content products={products} />
       <Footer />

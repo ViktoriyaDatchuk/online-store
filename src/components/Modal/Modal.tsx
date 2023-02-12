@@ -220,9 +220,12 @@ export const Modal = ({ onClose }: ModalProps) => {
               type="text"
               placeholder="Name"
               className="personalInfoInput"
+              data-testid="name-input"
             ></input>
             {nameDirty && nameError && (
-              <div className="errorMessage">{nameError}</div>
+              <div className="errorMessage" data-testid="name-messsage">
+                {nameError}
+              </div>
             )}
             <input
               onBlur={(e) => blurHandler(e)}
@@ -232,9 +235,12 @@ export const Modal = ({ onClose }: ModalProps) => {
               type="text"
               placeholder="Phone number"
               className="personalInfoInput"
+              data-testid="phone-input"
             ></input>
             {phoneDirty && phoneError && (
-              <div className="errorMessage">{phoneError}</div>
+              <div className="errorMessage" data-testid="phone-messsage">
+                {phoneError}
+              </div>
             )}
             <input
               onBlur={(e) => blurHandler(e)}
@@ -296,6 +302,7 @@ export const Modal = ({ onClose }: ModalProps) => {
                       placeholder="Valid"
                       maxLength={5}
                       className="cardInfoInput"
+                      data-testid="cardDate-input"
                     ></input>
                   </div>
                   <div className="cardInfoTitle">
@@ -320,12 +327,17 @@ export const Modal = ({ onClose }: ModalProps) => {
               <div className="errorMessage">{`Card number - ${cardNumberError}`}</div>
             )}
             {validDirty && validError && (
-              <div className="errorMessage">{`Valid - ${validError}`}</div>
+              <div
+                className="errorMessage"
+                data-testid="cardDate-message"
+              >{`Valid - ${validError}`}</div>
             )}
             {cvvDirty && cvvError && (
               <div className="errorMessage">{`CVV - ${cvvError}`}</div>
             )}
-            <button className="modalButton">Confirm</button>
+            <button className="modalButton" data-testid="button">
+              Confirm
+            </button>
           </form>
         )}
       </div>

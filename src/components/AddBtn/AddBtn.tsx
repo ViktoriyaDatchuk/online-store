@@ -43,6 +43,7 @@ export const AddBtn = ({ product }: { product: ProductResponse }) => {
 
   return (
     <a
+      data-testid="test-button"
       className={classNames("add", { added: productIsAdded })}
       onClick={!productIsAdded ? addToCart : removeFromCart}
     >
